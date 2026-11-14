@@ -1,34 +1,39 @@
-# Publicação do repositório completo (sem excluir dados)
+# Fluxo de versionamento — GitHub OrbitShop
 
-Este checkout possui todas as fontes **e o histórico Git**. A branch `develop` inclui os arquivos Excel, PowerPoint e resultados, além da implementação até a Tarefa 5.
+**Repositório remoto oficial:** https://github.com/RicardoSenna4/PROJETO_PEERS
 
-## Pré-requisitos
+**Branch de trabalho:** `develop`. A branch `main` fica protegida contra alterações sem revisão.
 
-- Git instalado e autenticado na conta GitHub `RicardoSenna4` (Git Credential Manager ou `gh auth login`).
-- O GitHub `RicardoSenna4/PROJETO_PEERS` deve estar vazio. O script interrompe a publicação se detectar branches existentes, para evitar sobrescrita acidental.
-- Use o arquivo `OrbitShop_Repositorio_Git_Integral.zip` com a pasta oculta `.git` preservada. Um ZIP apenas de código **não** permite preservar os commits anteriores.
+O projeto completo até a Tarefa 5 foi publicado na branch `develop`, incluindo os arquivos binários de entrada, os resultados completos, scripts, testes e documentação. A versão publicada foi validada com uma árvore de Git idêntica à do checkout local anterior à atualização deste guia.
 
-## No Windows (PowerShell)
+## Para continuar o trabalho no computador
 
-1. Extraia o ZIP integral.
-2. Abra PowerShell na pasta que contém `README.md` e `.git`.
-3. Confira `git log --oneline --all` e `git status`.
-4. Execute: `powershell -ExecutionPolicy Bypass -File scripts/publicar_github.ps1`.
-5. Verifique a branch `develop` no GitHub e os arquivos `input/Base_Dados_OrbitShop_v3.xlsx` e `input/Case_OrbitShop_Individual_v2.pptx`.
+Primeiro, **clone o repositório remoto**, pois ele agora contém os commits oficiais. Não use o ZIP/bundle local antigo para sobrescrever o histórico remoto: ele tem commits equivalentes em conteúdo, mas com identificadores de commit diferentes.
 
-## Alternativa manual
-
-```bash
-git remote add origin https://github.com/RicardoSenna4/PROJETO_PEERS.git
-git push -u origin main develop
+```powershell
+git clone --branch develop https://github.com/RicardoSenna4/PROJETO_PEERS.git
+cd PROJETO_PEERS
+git config user.name "Ricardo Sena"
+git config user.email "116093383+RicardoSenna4@users.noreply.github.com"
+python -m pip install -r requirements.txt
+python -m pytest -q
 ```
 
-Se `origin` já existir, use `git remote -v` e não repita a primeira linha.
+Depois de cada tarefa:
 
-## Autoria
+```powershell
+git status
+git add -A
+git commit -m "feat: descricao objetiva da tarefa"
+powershell -ExecutionPolicy Bypass -File scripts/publicar_github.ps1
+```
 
-Os commits preexistentes foram criados localmente com `Ricardo Sena <senaricardo450@gmail.com>`. Um `git push` preserva o autor e o identificador SHA de cada commit, sem atribuí-los à ferramenta usada para publicar. O usuário deve verificar se o e-mail corresponde à conta GitHub para que os commits apareçam vinculados ao perfil.
+O script consulta `origin/develop`, recusa histórico divergente e não usa `--force`. Ele não altera `main`.
 
-## Política futura
+## Autoria e rastreabilidade
 
-Para cada tarefa adicional, depois de validar os testes: fazer um commit separado na branch `develop`, depois fazer `git push origin develop` e verificar no GitHub. Não fazer merge na `main` sem aprovação. Se o push remoto não puder ser efetuado, declarar isso e disponibilizar o commit local.
+A publicação remota pela conexão GitHub foi verificada com autor e committer `Ricardo Sena` e conta `RicardoSenna4`. Para os próximos commits locais, utilize a identidade Git acima. Não declare um commit publicado antes de verificar a URL no GitHub. As mensagens de commit descrevem o código ou documento alterado, não a ferramenta utilizada.
+
+## Preservação de dados
+
+Não remover, anonimizar, truncar ou substituir o arquivo `input/Base_Dados_OrbitShop_v3.xlsx`, nem o PowerPoint original. A base é fictícia conforme declaração do proprietário. Confira os hashes de integridade em `docs/INTEGRIDADE_DADOS.md`.

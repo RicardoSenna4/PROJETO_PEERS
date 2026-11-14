@@ -93,4 +93,4 @@ Os dados originais e as saídas **não são ignorados** pelo Git, por solicitaç
 
 ### Publicar no GitHub com autoria preservada
 
-Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. Para enviar as branches `main` e `develop` ao repositório `RicardoSenna4/PROJETO_PEERS`, consulte `docs/COMO_PUBLICAR_GITHUB.md`. Uma publicação só pode ser considerada concluída após confirmar as branches no GitHub.
+Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. A branch `develop` do repositório `RicardoSenna4/PROJETO_PEERS` contém a implementação e todos os dados originais. Consulte `docs/COMO_PUBLICAR_GITHUB.md` para clonar a versão oficial e realizar commits incrementais nas próximas tarefas.
