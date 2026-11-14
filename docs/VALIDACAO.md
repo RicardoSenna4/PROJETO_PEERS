@@ -58,3 +58,10 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - Valor-base Q2: 15.000 pedidos, 2.537 cancelados (16,9133%). Por coorte: 2023 = 8.386/1.407 (16,7780%); 2024 = 6.614/1.130 (17,0850%). ∆ da quantidade = -19,6873%; ∆ taxa = +0,3070 p.p.
 - Originais preservados: `input/Base_Dados_OrbitShop_v3.xlsx` SHA-256 `f400a18e7cc838a201981c8a3ae2234e1a32a385ba1a3b91348f4f7770ca6f4b`; Q1 congelada SHA-256 `6eb8e615d55e6dfad8c007093f21a0786ee7c5e8be2239ffa913b15f22c53ae8`.
 - Verificação final: executar `python -m pytest -q`; o resultado recente está registrado no relatório de entrega das tarefas 4 e 5.
+
+## Tarefa 6 — Q3
+
+- `python -m src.run`: executado, tabelas CSV, relatório Markdown e gráficos PNG da Q3 produzidos.
+- `python -m pytest -q`: **53 passed**.
+- Teste independente `tests/test_q3_categorias.py`: joins com três tabelas, somas por categoria em centavos inteiros via SQLite, cenários de filtro de status, unidades e integridade.
+- A base e o PPT originais não foram alterados.

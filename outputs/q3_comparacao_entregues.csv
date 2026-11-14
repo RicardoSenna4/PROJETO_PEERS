@@ -1,0 +1,9 @@
+﻿categoria,posicao_valor,posicao_volume,variacao_posicao_volume_menos_valor,valor_comercial_itens_brl,participacao_valor_pct,unidades,participacao_volume_pct,preco_medio_ponderado_brl,pedidos_distintos_na_categoria,linhas_itens
+Eletrônicos,1,1,0,21999024.44,18.63,12436,16.99,1768.98,3475,4152
+Casa & Decoração,2,2,0,17568904.23,14.88,11925,16.29,1473.28,3359,3998
+Beleza & Saúde,3,4,1,16962519.83,14.36,9346,12.77,1814.95,2727,3120
+Esporte & Lazer,4,5,1,14293636.88,12.1,8058,11.01,1773.84,2415,2691
+Moda,5,3,-2,13902592.20,11.77,10321,14.1,1347.02,2970,3422
+Livros & Papelaria,6,6,0,12951931.61,10.97,7185,9.81,1802.63,2199,2426
+Bebês & Crianças,7,8,1,10935414.92,9.26,6960,9.51,1571.18,2068,2301
+Alimentos & Bebidas,8,7,-1,9470586.39,8.02,6981,9.54,1356.62,2088,2275

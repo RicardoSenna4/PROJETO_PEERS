@@ -13,7 +13,11 @@ Implementação das questões **Q1–Q9** do `Case_OrbitShop_Individual_v2.pptx`
 | `docs/03_METRICAS_E_ASSUNCOES.md` | Tarefa 3: contrato de métricas por questão, denominadores e ressalvas |
 | `docs/04_IMPLEMENTACAO_E_TESTES.md` | Tarefa 4: arquitetura mínima, pré-validação bloqueante e TDD |
 | `docs/05_Q2_DISTRIBUICAO_STATUS.md` | Tarefa 5: contagem geral, comparação anual e interpretação da Q2 |
+| `docs/06_Q3_CATEGORIAS.md` | Tarefa 6: ranking de valor comercial e unidades, sensibilidade por status e evidências |
 | `outputs/q2_por_ano.csv` | Detalhamento auditável por coorte de compra, 2023 e 2024 |
+| `outputs/q3_comparacao_entregues.csv` | Ranking comparativo em pedidos entregues, com participações e preço médio ponderado |
+| `outputs/q3_ranking_volume.csv` | Ranking de categorias em unidades |
+| `outputs/q3_ranking_valor.png` e `outputs/q3_ranking_volume.png` | Figuras de Q3 com escalas separadas |
 | `outputs/auditoria_qualidade.json` e `outputs/dicionario_dados.csv` | Evidências da auditoria e catálogo de campos |
 | `outputs/` | Tabelas CSV, figuras PNG, métricas JSON e reconciliação individual de 15.000 pedidos |
 | `src/` | Código de leitura, validação, métricas, gráficos e exportação |
@@ -74,11 +78,12 @@ Leia `docs/RELATORIO_TECNICO.md` para os denominadores, cenários e a justificat
 
 1. Requisito antes de código; Q1 foi congelada antes da análise.
 2. A validação de entrada bloqueia dados estruturalmente inválidos antes de calcular métricas.
-3. A Q2 agora gera também CSV anual e relatório Markdown por `src/q2.py`.
-4. Funções de análise pequenas, grão definido, dados imutáveis, resultados verificáveis.
-5. Testes sintéticos para regras críticas e verificação independente com SQLite para agregados.
-6. Sem abstrações desnecessárias, interfaces, serviços, CI complexo ou agentes paralelos.
-7. Erros observados registrados em `docs/USO_DE_IA.md`.
+3. A Q2 gera também CSV anual e relatório Markdown por `src/q2.py`.
+4. A Q3 usa `src/q3.py`, valida cardinalidade dos joins, compara receita proxy e volume sem reaplicar descontos e reconcilia com SQLite em centavos inteiros.
+5. Funções de análise pequenas, grão definido, dados imutáveis, resultados verificáveis.
+6. Testes sintéticos para regras críticas e verificação independente com SQLite para agregados.
+7. Sem abstrações desnecessárias, interfaces, serviços, CI complexo ou agentes paralelos.
+8. Erros observados registrados em `docs/USO_DE_IA.md`.
 
 ## Procedência e segurança
 
@@ -94,3 +99,11 @@ Os dados originais e as saídas **não são ignorados** pelo Git, por solicitaç
 ### Publicar no GitHub com autoria preservada
 
 Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. A branch `develop` do repositório `RicardoSenna4/PROJETO_PEERS` contém a implementação e todos os dados originais. Consulte `docs/COMO_PUBLICAR_GITHUB.md` para clonar a versão oficial e realizar commits incrementais nas próximas tarefas.
+
+## Progresso da Tarefa 6 — Q3
+
+- Análise principal: **9.959 pedidos entregues**, **24.385 linhas de itens** e **73.212 unidades**, totalizando **R$ 118.084.610,50** de valor comercial reconstruído dos itens (proxy; **não receita reconhecida**).
+- Top 3 por valor: Eletrônicos, Casa & Decoração, Beleza & Saúde. Por volume: Eletrônicos, Casa & Decoração, Moda.
+- Executar `python -m src.run` gera também `docs/06_Q3_CATEGORIAS.md`, comparações CSV e dois gráficos Q3.
+- Conferência independente de agregados por SQLite com preços convertidos a centavos inteiros, sem aplicar desconto duas vezes.
+- Suíte completa após implementação: **53 testes aprovados** (novembro de 2026).
