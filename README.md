@@ -90,3 +90,7 @@ O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados co
 ## Versionamento
 
 Os dados originais e as saídas **não são ignorados** pelo Git, por solicitação explícita do proprietário. Para cada tarefa seguinte, concluir os testes, criar um commit separado em `develop` e verificar a publicação remota antes de informar sucesso. Commits locais devem utilizar a identidade Git configurada `Ricardo Sena` e o e-mail associado à conta, sem atribuir identidade diferente da que de fato assina o commit. Nenhuma alteração deve ser mesclada em `main` sem revisão.
+
+### Publicar no GitHub com autoria preservada
+
+Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. Para enviar as branches `main` e `develop` ao repositório `RicardoSenna4/PROJETO_PEERS`, consulte `docs/COMO_PUBLICAR_GITHUB.md`. Uma publicação só pode ser considerada concluída após confirmar as branches no GitHub.
