@@ -10,6 +10,7 @@ Manter uma análise Python executável por CLI, sem sistemas externos e sem alte
 | `src/validation.py` | contrato de entrada: abas, campos, IDs únicos, relações, datas, status, números, vínculo cliente/pedido e avaliação/produto |
 | `src/data_quality.py` | auditoria explicativa da Tarefa 2 (não bloqueante) |
 | `src/analysis.py` | fórmulas operacionais puras, em granularidades definidas |
+| `src/q2.py` | formatação de saídas da questão Q2 |
 | `src/run.py` | pipeline CLI, relatórios, CSV e gráficos |
 | `tests/` | testes sintéticos, checagens da base real e comparação com SQLite |
 

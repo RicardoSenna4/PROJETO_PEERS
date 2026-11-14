@@ -5,6 +5,7 @@ from pathlib import Path
 from .workbook import load_xlsx
 from .analysis import analyze
 from .validation import validate_input
+from .q2 import q2_years_rows, render_q2_report
 
 
 def write_csv(path:Path, rows:list[dict]):
@@ -54,19 +55,24 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--input',default='input/Base_Dados_OrbitShop_v3.xlsx')
     p.add_argument('--output',default='outputs')
+    p.add_argument('--q2-report',default='docs/05_Q2_DISTRIBUICAO_STATUS.md')
     args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     data=load_xlsx(args.input);data.pop('Leia-me',None)
     validate_input(data)
     metrics,reconciliation=analyze(data)
     (out/'metricas.json').write_text(json.dumps(metrics,ensure_ascii=False,indent=2),encoding='utf-8')
     for path,rows in {
-      'q2_status.csv':metrics['Q2']['tabela_status'],'q3_categorias_entregues.csv':metrics['Q3_entregues'],
+      'q2_status.csv':metrics['Q2']['tabela_status'],
+      'q2_por_ano.csv':q2_years_rows(metrics['Q2']),'q3_categorias_entregues.csv':metrics['Q3_entregues'],
       'q3_categorias_nao_cancelados.csv':metrics['Q3_nao_cancelados'],'q3_categorias_todos.csv':metrics['Q3_todos'],
       'q4_canais.csv':metrics['Q4']['canais'],'q4_estratos.csv':metrics['Q4']['estratos'],
       'q5_mensal.csv':metrics['Q5']['meses'],'q5_coortes_suporte.csv':metrics['Q5']['coortes_suporte'],
       'q6_reconciliacao_pedido.csv':reconciliation,'q7_fornecedores.csv':metrics['Q7']['fornecedores']
     }.items():write_csv(out/path,rows)
     charts(metrics,out)
+    q2_report = Path(args.q2_report)
+    q2_report.parent.mkdir(parents=True, exist_ok=True)
+    q2_report.write_text(render_q2_report(metrics['Q2']), encoding='utf-8')
     print('Análise concluída: '+str(out.resolve()))
     print('Pedidos=',metrics['Q2']['n'],'cancelados=',next(r for r in metrics['Q2']['tabela_status'] if r['status']=='cancelado'))
     print('Reconciliação=',metrics['Q6']['contagens'])

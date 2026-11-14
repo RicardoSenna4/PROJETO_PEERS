@@ -24,3 +24,9 @@ Os **14 testes automatizados** foram executados e aprovados, mas **não substitu
 ## Revisão crítica de método — execução das tarefas 2 e 3
 
 Foi feito um teste explícito da relação entre preço de catálogo, desconto e preço praticado. O resultado confirmou, em 36.439 linhas com desconto conhecido e tolerância de R$ 0,01, que o preço praticado já está descontado. Essa verificação revelou que a simulação inicial que aplicava novamente `desconto_aplicado` duplicava o desconto. A metodologia foi corrigida em `docs/03_METRICAS_E_ASSUNCOES.md` e nos avisos do README; os cenários antigos permanecem apenas como evidência histórica e não devem ser apresentados como receita. Os 21 testes foram executados de fato.
+
+### 14/11/2026 — Evolução das tarefas 4 e 5
+
+- Assistência com IA utilizada para elaborar a pré-validação, escrever casos sintéticos e gerar o relatório Q2 a partir de resultados reproduzíveis.
+- Um teste de ID duplicado inicialmente falhou por exigir a expressão `duplicad` na mensagem, enquanto a exceção real empregava `duplicatas`; o teste foi corrigido para verificar o mesmo comportamento por `duplica` sem reduzir a exigência de rejeição da duplicação.
+- Executados 46 testes, incluindo validação independente de totais por coorte com SQLite e integração da CLI com CSV e PNG. A verificação de consistência foi técnica, não prova de causalidade ou de receita auditada.

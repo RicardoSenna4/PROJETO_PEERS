@@ -2,6 +2,7 @@
 from __future__ import annotations
 from collections import Counter, defaultdict
 from decimal import Decimal
+from datetime import date
 from statistics import mean, median
 from typing import Any
 
@@ -65,19 +66,41 @@ def audit(data: dict) -> dict:
 
 
 def status_metrics(orders: list[dict]) -> dict:
-    counts=Counter(o['status'] for o in orders)
-    n=len(orders)
-    status=[{'status':k,'pedidos':v,'percentual':percent(v,n)} for k,v in counts.most_common()]
-    years={}
-    for y in ('2023','2024'):
-        subset=[o for o in orders if o['data_pedido'][:4]==y]
-        canc=sum(o['status']=='cancelado' for o in subset)
-        years[y]={'total':len(subset),'cancelados':canc,'taxa_cancelamento_pct':percent(canc,len(subset))}
-    a,b=years['2023'],years['2024']
-    return {'tabela_status':status,'n':n,'anos':years,
-            'variacao_cancelados_pct':percent(b['cancelados']-a['cancelados'],a['cancelados']),
-            'variacao_taxa_pontos_percentuais':round(b['taxa_cancelamento_pct']-a['taxa_cancelamento_pct'],4),
-            'variacao_taxa_relativa_pct':percent(b['taxa_cancelamento_pct']-a['taxa_cancelamento_pct'],a['taxa_cancelamento_pct'])}
+    """Q2: status atual por pedido, ano definido por data_pedido (coorte)."""
+    indexed(orders)  # Uma linha por pedido: somar linhas duplicadas infla o denominador.
+    allowed = {'entregue', 'cancelado', 'em_transito', 'devolvido'}
+    for order in orders:
+        if order['status'] not in allowed:
+            raise ValueError(f"Status de pedido inesperado: {order['status']!r}")
+        try:
+            creation_date = date.fromisoformat(str(order['data_pedido']))
+        except (ValueError, TypeError) as exc:
+            raise ValueError(f"Data de pedido inválida: {order['data_pedido']!r}") from exc
+        if creation_date.year not in (2023, 2024):
+            raise ValueError('Q2 exige pedidos de janeiro/2023 a dezembro/2024')
+
+    counts = Counter(o['status'] for o in orders)
+    n = len(orders)
+    status = [{'status': k, 'pedidos': v, 'percentual': percent(v, n)}
+              for k, v in counts.most_common()]
+    years = {}
+    for year in ('2023', '2024'):
+        subset = [o for o in orders if o['data_pedido'][:4] == year]
+        cancelled = sum(o['status'] == 'cancelado' for o in subset)
+        years[year] = {'total': len(subset), 'cancelados': cancelled,
+                       'taxa_cancelamento_pct': percent(cancelled, len(subset))}
+    a, b = years['2023'], years['2024']
+    rate_a = a['cancelados'] / a['total'] if a['total'] else None
+    rate_b = b['cancelados'] / b['total'] if b['total'] else None
+    delta_rate = (rate_b - rate_a) if rate_a is not None and rate_b is not None else None
+    return {
+        'tabela_status': status,
+        'n': n,
+        'anos': years,
+        'variacao_cancelados_pct': percent(b['cancelados'] - a['cancelados'], a['cancelados']),
+        'variacao_taxa_pontos_percentuais': round(100 * delta_rate, 4) if delta_rate is not None else None,
+        'variacao_taxa_relativa_pct': percent(delta_rate, rate_a) if delta_rate is not None else None,
+    }
 
 
 def categories_metrics(data: dict, eligible_status: set[str]|None=None) -> list[dict]:

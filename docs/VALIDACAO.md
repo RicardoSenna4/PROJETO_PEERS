@@ -48,3 +48,13 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - Confirmação não presumida: `preco_praticado` já reflete desconto informado em 36.439/36.439 itens a ± R$ 0,01. Ajustado contrato metodológico; antigas simulações de desconto adicional ficam marcadas como inadequadas para receita.
 - **21 testes aprovados** (`python -m pytest -q`, execução posterior à inclusão de `tests/test_data_quality.py`, incluindo detecção de dados adulterados e chave órfã). A referência anterior de 14 testes documenta a execução precedente, não a mais recente.
 - Planilha original não foi alterada; mesmo SHA-256 indicado no topo deste documento.
+
+## Verificação adicional — Tarefas 4 e 5 (14/11/2026)
+
+- Tarefa 4: `src/validation.py` bloqueia erros críticos de grão, chaves, domínio, data e quantidade, preservando dados originais e valores financeiros nulos.
+- Tarefa 5: `src/analysis.py` exige um ID por pedido, calcula percentuais e diferenças sobre o ano de compra. `src/q2.py` gera relatório consistente com `q2_status.csv`, `q2_por_ano.csv` e `q2_status.png`.
+- Testes escritos antes dos módulos e executados inicialmente com falha por ausência de implementação (RED); depois aprovados com as mudanças (GREEN).
+- Teste independente SQLite confirma coortes de 2023 e 2024; integração real testa a CLI e a geração do CSV, relatório e PNG.
+- Valor-base Q2: 15.000 pedidos, 2.537 cancelados (16,9133%). Por coorte: 2023 = 8.386/1.407 (16,7780%); 2024 = 6.614/1.130 (17,0850%). ∆ da quantidade = -19,6873%; ∆ taxa = +0,3070 p.p.
+- Originais preservados: `input/Base_Dados_OrbitShop_v3.xlsx` SHA-256 `f400a18e7cc838a201981c8a3ae2234e1a32a385ba1a3b91348f4f7770ca6f4b`; Q1 congelada SHA-256 `6eb8e615d55e6dfad8c007093f21a0786ee7c5e8be2239ffa913b15f22c53ae8`.
+- Verificação final: executar `python -m pytest -q`; o resultado recente está registrado no relatório de entrega das tarefas 4 e 5.
