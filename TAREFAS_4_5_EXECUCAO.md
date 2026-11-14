@@ -52,3 +52,8 @@ SHA-256 Q1_CONGELADA_PRE_ANALISE.md:
 ## Publicação / Git
 
 Foram preparados commits locais com autoria `Ricardo Sena` conforme solicitado. O repositório remoto `RicardoSenna4/PROJETO_PEERS` não foi modificado nesta execução: o conector do GitHub não permite fixar explicitamente a autoria do commit; seria incorreto afirmar que conseguirá registrar exatamente o nome solicitado. A base de clientes foi excluída do histórico versionado público por segurança. Um `git bundle` separado carrega as revisões locais e pode ser enviado com o Git autenticado do usuário.
+
+
+## Atualização de preservação integral
+
+Por solicitação expressa do proprietário, o repositório agora preserva o Excel, o PPT e **todos os resultados derivados**, sem exclusões de origem. Ver `docs/INTEGRIDADE_DADOS.md`. O texto acima descreve a política anterior; esta seção registra a substituição dessa política.

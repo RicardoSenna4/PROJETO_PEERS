@@ -1,3 +1,4 @@
+# Apenas arquivos temporários de execução; não excluir entradas nem resultados.
 .venv/
 __pycache__/
 .pytest_cache/
@@ -6,14 +7,3 @@ __pycache__/
 _renders/
 _renders_v2/
 .coverage
-
-# A base contém cadastro individual de clientes e o enunciado é material do processo seletivo.
-# Nunca publicar anexos de origem num repositório GitHub público sem revisão/autorização.
-input/*.xlsx
-input/*.pptx
-
-# Saídas reproduzíveis. Preservar apenas os agregados da Q2 em histórico público.
-outputs/*
-!outputs/q2_status.csv
-!outputs/q2_por_ano.csv
-!outputs/q2_status.png

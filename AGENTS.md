@@ -51,3 +51,11 @@ PRÓXIMO PASSO:
 ## Parada segura
 
 Se houver divergência financeira, semântica de desconto não comprovada, contradição do enunciado, arquivos indisponíveis ou fragilidade de joins, **não mascarar o problema**. Produzir análise de sensibilidade e documentação de limites; pedir uma decisão humana apenas quando a escolha for material e não puder ser determinada pelo enunciado.
+
+## Política de preservação e versionamento
+
+- **Não excluir, anonimizar, resumir, filtrar ou reescrever o Excel/PPT originais.** O usuário confirmou que os dados são fictícios e autorizou o versionamento integral.
+- Manter `input/Base_Dados_OrbitShop_v3.xlsx` e `input/Case_OrbitShop_Individual_v2.pptx` em todos os pacotes e no histórico Git.
+- A cada nova tarefa: executar testes pertinentes, registrar diff, gerar um commit específico em `develop` e verificar push remoto. Não declarar publicado sem consultar o commit no GitHub.
+- Autor dos commits locais: `Ricardo Sena`, com e-mail associado à conta GitHub. Atribuição da autoria pela integração remota só pode ser declarada após verificação do metadado retornado pelo GitHub.
+- Não alterar `main` sem revisão do proprietário.

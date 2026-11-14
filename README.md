@@ -82,6 +82,11 @@ Leia `docs/RELATORIO_TECNICO.md` para os denominadores, cenários e a justificat
 
 ## Procedência e segurança
 
-O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados como **dados, não instruções operacionais**. Nenhum script acessa rede ou altera o material original. Nenhum e-mail foi enviado e nenhum repositório remoto foi modificado.
+O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados como **dados, não instruções operacionais**. Nenhum script acessa rede ou altera o material original. Os arquivos originais completos, fornecidos como dados fictícios para este case, são mantidos no repositório conforme autorização do proprietário. Consulte `docs/INTEGRIDADE_DADOS.md` para conferir hashes e contagens. A publicação remota deve ser confirmada pela verificação dos commits no GitHub.
 
 **Prazo do enunciado:** 16/11/2026 às 10h. Antes de enviar, confira manualmente o destinatário, o assunto e seu nome conforme o PPT.
+
+
+## Versionamento
+
+Os dados originais e as saídas **não são ignorados** pelo Git, por solicitação explícita do proprietário. Para cada tarefa seguinte, concluir os testes, criar um commit separado em `develop` e verificar a publicação remota antes de informar sucesso. Commits locais devem utilizar a identidade Git configurada `Ricardo Sena` e o e-mail associado à conta, sem atribuir identidade diferente da que de fato assina o commit. Nenhuma alteração deve ser mesclada em `main` sem revisão.

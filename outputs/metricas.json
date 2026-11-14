@@ -1,0 +1,1084 @@
+{
+  "auditoria": {
+    "tabelas": {
+      "Clientes": {
+        "registros": 3000,
+        "colunas": [
+          "id",
+          "nome",
+          "email",
+          "cidade",
+          "estado",
+          "data_cadastro",
+          "segmento",
+          "canal_aquisicao"
+        ],
+        "ausentes": {
+          "id": 0,
+          "nome": 0,
+          "email": 0,
+          "cidade": 0,
+          "estado": 0,
+          "data_cadastro": 0,
+          "segmento": 0,
+          "canal_aquisicao": 0
+        },
+        "ids_duplicados": 0
+      },
+      "Produtos": {
+        "registros": 200,
+        "colunas": [
+          "id",
+          "nome",
+          "categoria",
+          "subcategoria",
+          "preco_unitario",
+          "custo_unitario",
+          "fornecedor"
+        ],
+        "ausentes": {
+          "id": 0,
+          "nome": 0,
+          "categoria": 0,
+          "subcategoria": 0,
+          "preco_unitario": 0,
+          "custo_unitario": 0,
+          "fornecedor": 0
+        },
+        "ids_duplicados": 0
+      },
+      "Pedidos": {
+        "registros": 15000,
+        "colunas": [
+          "id",
+          "cliente_id",
+          "data_pedido",
+          "status",
+          "valor_total",
+          "canal_venda",
+          "cupom_desconto"
+        ],
+        "ausentes": {
+          "id": 0,
+          "cliente_id": 0,
+          "data_pedido": 0,
+          "status": 0,
+          "valor_total": 79,
+          "canal_venda": 0,
+          "cupom_desconto": 0
+        },
+        "ids_duplicados": 0
+      },
+      "Itens_Pedido": {
+        "registros": 36740,
+        "colunas": [
+          "id",
+          "pedido_id",
+          "produto_id",
+          "quantidade",
+          "preco_praticado",
+          "desconto_aplicado"
+        ],
+        "ausentes": {
+          "id": 0,
+          "pedido_id": 0,
+          "produto_id": 0,
+          "quantidade": 0,
+          "preco_praticado": 0,
+          "desconto_aplicado": 301
+        },
+        "ids_duplicados": 0
+      },
+      "Tickets_Suporte": {
+        "registros": 4000,
+        "colunas": [
+          "id",
+          "pedido_id",
+          "cliente_id",
+          "categoria_problema",
+          "data_abertura",
+          "data_resolucao",
+          "status"
+        ],
+        "ausentes": {
+          "id": 0,
+          "pedido_id": 0,
+          "cliente_id": 0,
+          "categoria_problema": 0,
+          "data_abertura": 0,
+          "data_resolucao": 1653,
+          "status": 0
+        },
+        "ids_duplicados": 0
+      },
+      "Avaliacoes": {
+        "registros": 8000,
+        "colunas": [
+          "id",
+          "pedido_id",
+          "produto_id",
+          "cliente_id",
+          "nota",
+          "comentario",
+          "data_avaliacao"
+        ],
+        "ausentes": {
+          "id": 0,
+          "pedido_id": 0,
+          "produto_id": 0,
+          "cliente_id": 0,
+          "nota": 0,
+          "comentario": 1679,
+          "data_avaliacao": 0
+        },
+        "ids_duplicados": 0
+      }
+    },
+    "chaves_estrangeiras_orfas": {
+      "Pedidos.cliente_id": 0,
+      "Itens_Pedido.pedido_id": 0,
+      "Itens_Pedido.produto_id": 0,
+      "Tickets_Suporte.pedido_id": 0,
+      "Tickets_Suporte.cliente_id": 0,
+      "Avaliacoes.pedido_id": 0,
+      "Avaliacoes.produto_id": 0,
+      "Avaliacoes.cliente_id": 0
+    },
+    "anomalias_relacionais": {
+      "tickets_cliente_diferente_pedido": 0,
+      "avaliacoes_cliente_diferente_pedido": 0,
+      "avaliacoes_produto_fora_pedido": 0,
+      "tickets_anteriores_a_compra": 0,
+      "avaliacoes_anteriores_a_compra": 0,
+      "pedidos_sem_itens": 0
+    }
+  },
+  "Q2": {
+    "tabela_status": [
+      {
+        "status": "entregue",
+        "pedidos": 9959,
+        "percentual": 66.3933
+      },
+      {
+        "status": "cancelado",
+        "pedidos": 2537,
+        "percentual": 16.9133
+      },
+      {
+        "status": "em_transito",
+        "pedidos": 1371,
+        "percentual": 9.14
+      },
+      {
+        "status": "devolvido",
+        "pedidos": 1133,
+        "percentual": 7.5533
+      }
+    ],
+    "n": 15000,
+    "anos": {
+      "2023": {
+        "total": 8386,
+        "cancelados": 1407,
+        "taxa_cancelamento_pct": 16.778
+      },
+      "2024": {
+        "total": 6614,
+        "cancelados": 1130,
+        "taxa_cancelamento_pct": 17.085
+      }
+    },
+    "variacao_cancelados_pct": -19.6873,
+    "variacao_taxa_pontos_percentuais": 0.307,
+    "variacao_taxa_relativa_pct": 1.8298
+  },
+  "Q3_entregues": [
+    {
+      "categoria": "Eletrônicos",
+      "unidades": 12436,
+      "valor_bruto_itens": "21999024.44",
+      "linhas": 4152,
+      "pedidos_distintos": 3475,
+      "preco_medio_ponderado": "1768.98"
+    },
+    {
+      "categoria": "Casa & Decoração",
+      "unidades": 11925,
+      "valor_bruto_itens": "17568904.23",
+      "linhas": 3998,
+      "pedidos_distintos": 3359,
+      "preco_medio_ponderado": "1473.28"
+    },
+    {
+      "categoria": "Beleza & Saúde",
+      "unidades": 9346,
+      "valor_bruto_itens": "16962519.83",
+      "linhas": 3120,
+      "pedidos_distintos": 2727,
+      "preco_medio_ponderado": "1814.95"
+    },
+    {
+      "categoria": "Esporte & Lazer",
+      "unidades": 8058,
+      "valor_bruto_itens": "14293636.88",
+      "linhas": 2691,
+      "pedidos_distintos": 2415,
+      "preco_medio_ponderado": "1773.84"
+    },
+    {
+      "categoria": "Moda",
+      "unidades": 10321,
+      "valor_bruto_itens": "13902592.20",
+      "linhas": 3422,
+      "pedidos_distintos": 2970,
+      "preco_medio_ponderado": "1347.02"
+    },
+    {
+      "categoria": "Livros & Papelaria",
+      "unidades": 7185,
+      "valor_bruto_itens": "12951931.61",
+      "linhas": 2426,
+      "pedidos_distintos": 2199,
+      "preco_medio_ponderado": "1802.63"
+    },
+    {
+      "categoria": "Bebês & Crianças",
+      "unidades": 6960,
+      "valor_bruto_itens": "10935414.92",
+      "linhas": 2301,
+      "pedidos_distintos": 2068,
+      "preco_medio_ponderado": "1571.18"
+    },
+    {
+      "categoria": "Alimentos & Bebidas",
+      "unidades": 6981,
+      "valor_bruto_itens": "9470586.39",
+      "linhas": 2275,
+      "pedidos_distintos": 2088,
+      "preco_medio_ponderado": "1356.62"
+    }
+  ],
+  "Q3_nao_cancelados": [
+    {
+      "categoria": "Eletrônicos",
+      "unidades": 15521,
+      "valor_bruto_itens": "27250216.97",
+      "linhas": 5155,
+      "pedidos_distintos": 4316,
+      "preco_medio_ponderado": "1755.70"
+    },
+    {
+      "categoria": "Casa & Decoração",
+      "unidades": 14850,
+      "valor_bruto_itens": "21810340.66",
+      "linhas": 4981,
+      "pedidos_distintos": 4175,
+      "preco_medio_ponderado": "1468.71"
+    },
+    {
+      "categoria": "Beleza & Saúde",
+      "unidades": 11507,
+      "valor_bruto_itens": "20838983.18",
+      "linhas": 3859,
+      "pedidos_distintos": 3370,
+      "preco_medio_ponderado": "1810.98"
+    },
+    {
+      "categoria": "Esporte & Lazer",
+      "unidades": 10214,
+      "valor_bruto_itens": "18071566.47",
+      "linhas": 3380,
+      "pedidos_distintos": 3039,
+      "preco_medio_ponderado": "1769.29"
+    },
+    {
+      "categoria": "Moda",
+      "unidades": 12943,
+      "valor_bruto_itens": "17515594.37",
+      "linhas": 4284,
+      "pedidos_distintos": 3698,
+      "preco_medio_ponderado": "1353.29"
+    },
+    {
+      "categoria": "Livros & Papelaria",
+      "unidades": 9093,
+      "valor_bruto_itens": "16232399.96",
+      "linhas": 3054,
+      "pedidos_distintos": 2767,
+      "preco_medio_ponderado": "1785.15"
+    },
+    {
+      "categoria": "Bebês & Crianças",
+      "unidades": 8672,
+      "valor_bruto_itens": "13501399.98",
+      "linhas": 2884,
+      "pedidos_distintos": 2609,
+      "preco_medio_ponderado": "1556.90"
+    },
+    {
+      "categoria": "Alimentos & Bebidas",
+      "unidades": 8691,
+      "valor_bruto_itens": "11742478.63",
+      "linhas": 2845,
+      "pedidos_distintos": 2603,
+      "preco_medio_ponderado": "1351.11"
+    }
+  ],
+  "Q3_todos": [
+    {
+      "categoria": "Eletrônicos",
+      "unidades": 18658,
+      "valor_bruto_itens": "32744202.62",
+      "linhas": 6213,
+      "pedidos_distintos": 5189,
+      "preco_medio_ponderado": "1754.97"
+    },
+    {
+      "categoria": "Casa & Decoração",
+      "unidades": 17899,
+      "valor_bruto_itens": "26159749.82",
+      "linhas": 6008,
+      "pedidos_distintos": 5039,
+      "preco_medio_ponderado": "1461.52"
+    },
+    {
+      "categoria": "Beleza & Saúde",
+      "unidades": 13723,
+      "valor_bruto_itens": "24851036.42",
+      "linhas": 4600,
+      "pedidos_distintos": 4027,
+      "preco_medio_ponderado": "1810.90"
+    },
+    {
+      "categoria": "Esporte & Lazer",
+      "unidades": 12202,
+      "valor_bruto_itens": "21565053.33",
+      "linhas": 4079,
+      "pedidos_distintos": 3669,
+      "preco_medio_ponderado": "1767.34"
+    },
+    {
+      "categoria": "Moda",
+      "unidades": 15680,
+      "valor_bruto_itens": "21170086.42",
+      "linhas": 5191,
+      "pedidos_distintos": 4483,
+      "preco_medio_ponderado": "1350.13"
+    },
+    {
+      "categoria": "Livros & Papelaria",
+      "unidades": 10995,
+      "valor_bruto_itens": "19633252.55",
+      "linhas": 3696,
+      "pedidos_distintos": 3346,
+      "preco_medio_ponderado": "1785.65"
+    },
+    {
+      "categoria": "Bebês & Crianças",
+      "unidades": 10439,
+      "valor_bruto_itens": "16277418.93",
+      "linhas": 3497,
+      "pedidos_distintos": 3170,
+      "preco_medio_ponderado": "1559.29"
+    },
+    {
+      "categoria": "Alimentos & Bebidas",
+      "unidades": 10568,
+      "valor_bruto_itens": "14329690.79",
+      "linhas": 3456,
+      "pedidos_distintos": 3155,
+      "preco_medio_ponderado": "1355.95"
+    }
+  ],
+  "Q4": {
+    "canais": [
+      {
+        "canal_aquisicao": "paid_search",
+        "clientes_cadastrados": 766,
+        "clientes_com_pedido": 761,
+        "pedidos": 3965,
+        "participacao_pct": 26.4333,
+        "cancelados": 1219,
+        "taxa_cancelamento_pct": 30.744,
+        "entregues": 2201,
+        "entregues_com_valor": 2185,
+        "entregues_sem_valor": 16,
+        "ticket_medio_entregue_reportado": "2576.54",
+        "pedidos_b2b": 802
+      },
+      {
+        "canal_aquisicao": "indicação",
+        "clientes_cadastrados": 739,
+        "clientes_com_pedido": 735,
+        "pedidos": 3658,
+        "participacao_pct": 24.3867,
+        "cancelados": 453,
+        "taxa_cancelamento_pct": 12.3838,
+        "entregues": 2563,
+        "entregues_com_valor": 2552,
+        "entregues_sem_valor": 11,
+        "ticket_medio_entregue_reportado": "2531.85",
+        "pedidos_b2b": 729
+      },
+      {
+        "canal_aquisicao": "orgânico",
+        "clientes_cadastrados": 731,
+        "clientes_com_pedido": 724,
+        "pedidos": 3616,
+        "participacao_pct": 24.1067,
+        "cancelados": 426,
+        "taxa_cancelamento_pct": 11.781,
+        "entregues": 2558,
+        "entregues_com_valor": 2542,
+        "entregues_sem_valor": 16,
+        "ticket_medio_entregue_reportado": "2515.08",
+        "pedidos_b2b": 694
+      },
+      {
+        "canal_aquisicao": "redes_sociais",
+        "clientes_cadastrados": 764,
+        "clientes_com_pedido": 757,
+        "pedidos": 3761,
+        "participacao_pct": 25.0733,
+        "cancelados": 439,
+        "taxa_cancelamento_pct": 11.6724,
+        "entregues": 2637,
+        "entregues_com_valor": 2622,
+        "entregues_sem_valor": 15,
+        "ticket_medio_entregue_reportado": "2651.49",
+        "pedidos_b2b": 789
+      }
+    ],
+    "fracao_cancelamentos_paid_search_pct": 48.0489,
+    "estratos": [
+      {
+        "canal": "indicação",
+        "estrato": "2023",
+        "pedidos": 2039,
+        "cancelados": 269,
+        "taxa_cancelamento_pct": 13.1927
+      },
+      {
+        "canal": "indicação",
+        "estrato": "2024",
+        "pedidos": 1619,
+        "cancelados": 184,
+        "taxa_cancelamento_pct": 11.365
+      },
+      {
+        "canal": "indicação",
+        "estrato": "B2B",
+        "pedidos": 729,
+        "cancelados": 85,
+        "taxa_cancelamento_pct": 11.6598
+      },
+      {
+        "canal": "indicação",
+        "estrato": "B2C",
+        "pedidos": 2929,
+        "cancelados": 368,
+        "taxa_cancelamento_pct": 12.564
+      },
+      {
+        "canal": "orgânico",
+        "estrato": "2023",
+        "pedidos": 2020,
+        "cancelados": 243,
+        "taxa_cancelamento_pct": 12.0297
+      },
+      {
+        "canal": "orgânico",
+        "estrato": "2024",
+        "pedidos": 1596,
+        "cancelados": 183,
+        "taxa_cancelamento_pct": 11.4662
+      },
+      {
+        "canal": "orgânico",
+        "estrato": "B2B",
+        "pedidos": 694,
+        "cancelados": 82,
+        "taxa_cancelamento_pct": 11.8156
+      },
+      {
+        "canal": "orgânico",
+        "estrato": "B2C",
+        "pedidos": 2922,
+        "cancelados": 344,
+        "taxa_cancelamento_pct": 11.7728
+      },
+      {
+        "canal": "paid_search",
+        "estrato": "2023",
+        "pedidos": 2196,
+        "cancelados": 654,
+        "taxa_cancelamento_pct": 29.7814
+      },
+      {
+        "canal": "paid_search",
+        "estrato": "2024",
+        "pedidos": 1769,
+        "cancelados": 565,
+        "taxa_cancelamento_pct": 31.9389
+      },
+      {
+        "canal": "paid_search",
+        "estrato": "B2B",
+        "pedidos": 802,
+        "cancelados": 260,
+        "taxa_cancelamento_pct": 32.419
+      },
+      {
+        "canal": "paid_search",
+        "estrato": "B2C",
+        "pedidos": 3163,
+        "cancelados": 959,
+        "taxa_cancelamento_pct": 30.3193
+      },
+      {
+        "canal": "redes_sociais",
+        "estrato": "2023",
+        "pedidos": 2131,
+        "cancelados": 241,
+        "taxa_cancelamento_pct": 11.3092
+      },
+      {
+        "canal": "redes_sociais",
+        "estrato": "2024",
+        "pedidos": 1630,
+        "cancelados": 198,
+        "taxa_cancelamento_pct": 12.1472
+      },
+      {
+        "canal": "redes_sociais",
+        "estrato": "B2B",
+        "pedidos": 789,
+        "cancelados": 96,
+        "taxa_cancelamento_pct": 12.1673
+      },
+      {
+        "canal": "redes_sociais",
+        "estrato": "B2C",
+        "pedidos": 2972,
+        "cancelados": 343,
+        "taxa_cancelamento_pct": 11.541
+      }
+    ]
+  },
+  "Q5": {
+    "meses": [
+      {
+        "mes": "2023-01",
+        "pedidos": 525,
+        "chamados_abertos": 73
+      },
+      {
+        "mes": "2023-02",
+        "pedidos": 492,
+        "chamados_abertos": 118
+      },
+      {
+        "mes": "2023-03",
+        "pedidos": 613,
+        "chamados_abertos": 159
+      },
+      {
+        "mes": "2023-04",
+        "pedidos": 564,
+        "chamados_abertos": 133
+      },
+      {
+        "mes": "2023-05",
+        "pedidos": 579,
+        "chamados_abertos": 168
+      },
+      {
+        "mes": "2023-06",
+        "pedidos": 531,
+        "chamados_abertos": 157
+      },
+      {
+        "mes": "2023-07",
+        "pedidos": 542,
+        "chamados_abertos": 138
+      },
+      {
+        "mes": "2023-08",
+        "pedidos": 584,
+        "chamados_abertos": 160
+      },
+      {
+        "mes": "2023-09",
+        "pedidos": 527,
+        "chamados_abertos": 151
+      },
+      {
+        "mes": "2023-10",
+        "pedidos": 554,
+        "chamados_abertos": 156
+      },
+      {
+        "mes": "2023-11",
+        "pedidos": 2317,
+        "chamados_abertos": 375
+      },
+      {
+        "mes": "2023-12",
+        "pedidos": 558,
+        "chamados_abertos": 391
+      },
+      {
+        "mes": "2024-01",
+        "pedidos": 542,
+        "chamados_abertos": 133
+      },
+      {
+        "mes": "2024-02",
+        "pedidos": 499,
+        "chamados_abertos": 127
+      },
+      {
+        "mes": "2024-03",
+        "pedidos": 551,
+        "chamados_abertos": 117
+      },
+      {
+        "mes": "2024-04",
+        "pedidos": 558,
+        "chamados_abertos": 137
+      },
+      {
+        "mes": "2024-05",
+        "pedidos": 608,
+        "chamados_abertos": 183
+      },
+      {
+        "mes": "2024-06",
+        "pedidos": 498,
+        "chamados_abertos": 149
+      },
+      {
+        "mes": "2024-07",
+        "pedidos": 588,
+        "chamados_abertos": 142
+      },
+      {
+        "mes": "2024-08",
+        "pedidos": 599,
+        "chamados_abertos": 158
+      },
+      {
+        "mes": "2024-09",
+        "pedidos": 521,
+        "chamados_abertos": 174
+      },
+      {
+        "mes": "2024-10",
+        "pedidos": 545,
+        "chamados_abertos": 127
+      },
+      {
+        "mes": "2024-11",
+        "pedidos": 585,
+        "chamados_abertos": 154
+      },
+      {
+        "mes": "2024-12",
+        "pedidos": 520,
+        "chamados_abertos": 220
+      }
+    ],
+    "maior_mes_por_ano": {
+      "2023": {
+        "mes": "2023-11",
+        "pedidos": 2317,
+        "chamados_abertos": 375
+      },
+      "2024": {
+        "mes": "2024-05",
+        "pedidos": 608,
+        "chamados_abertos": 183
+      }
+    },
+    "coortes_suporte": [
+      {
+        "mes_compra": "2023-01",
+        "pedidos": 525,
+        "tickets_vinculados": 135,
+        "taxa_ticket_por_pedido_pct": 25.7143
+      },
+      {
+        "mes_compra": "2023-02",
+        "pedidos": 492,
+        "tickets_vinculados": 135,
+        "taxa_ticket_por_pedido_pct": 27.439
+      },
+      {
+        "mes_compra": "2023-03",
+        "pedidos": 613,
+        "tickets_vinculados": 147,
+        "taxa_ticket_por_pedido_pct": 23.9804
+      },
+      {
+        "mes_compra": "2023-04",
+        "pedidos": 564,
+        "tickets_vinculados": 154,
+        "taxa_ticket_por_pedido_pct": 27.305
+      },
+      {
+        "mes_compra": "2023-05",
+        "pedidos": 579,
+        "tickets_vinculados": 157,
+        "taxa_ticket_por_pedido_pct": 27.1157
+      },
+      {
+        "mes_compra": "2023-06",
+        "pedidos": 531,
+        "tickets_vinculados": 156,
+        "taxa_ticket_por_pedido_pct": 29.3785
+      },
+      {
+        "mes_compra": "2023-07",
+        "pedidos": 542,
+        "tickets_vinculados": 131,
+        "taxa_ticket_por_pedido_pct": 24.1697
+      },
+      {
+        "mes_compra": "2023-08",
+        "pedidos": 584,
+        "tickets_vinculados": 171,
+        "taxa_ticket_por_pedido_pct": 29.2808
+      },
+      {
+        "mes_compra": "2023-09",
+        "pedidos": 527,
+        "tickets_vinculados": 146,
+        "taxa_ticket_por_pedido_pct": 27.704
+      },
+      {
+        "mes_compra": "2023-10",
+        "pedidos": 554,
+        "tickets_vinculados": 158,
+        "taxa_ticket_por_pedido_pct": 28.5199
+      },
+      {
+        "mes_compra": "2023-11",
+        "pedidos": 2317,
+        "tickets_vinculados": 603,
+        "taxa_ticket_por_pedido_pct": 26.025
+      },
+      {
+        "mes_compra": "2023-12",
+        "pedidos": 558,
+        "tickets_vinculados": 152,
+        "taxa_ticket_por_pedido_pct": 27.2401
+      },
+      {
+        "mes_compra": "2024-01",
+        "pedidos": 542,
+        "tickets_vinculados": 135,
+        "taxa_ticket_por_pedido_pct": 24.9077
+      },
+      {
+        "mes_compra": "2024-02",
+        "pedidos": 499,
+        "tickets_vinculados": 113,
+        "taxa_ticket_por_pedido_pct": 22.6453
+      },
+      {
+        "mes_compra": "2024-03",
+        "pedidos": 551,
+        "tickets_vinculados": 135,
+        "taxa_ticket_por_pedido_pct": 24.5009
+      },
+      {
+        "mes_compra": "2024-04",
+        "pedidos": 558,
+        "tickets_vinculados": 148,
+        "taxa_ticket_por_pedido_pct": 26.5233
+      },
+      {
+        "mes_compra": "2024-05",
+        "pedidos": 608,
+        "tickets_vinculados": 169,
+        "taxa_ticket_por_pedido_pct": 27.7961
+      },
+      {
+        "mes_compra": "2024-06",
+        "pedidos": 498,
+        "tickets_vinculados": 147,
+        "taxa_ticket_por_pedido_pct": 29.5181
+      },
+      {
+        "mes_compra": "2024-07",
+        "pedidos": 588,
+        "tickets_vinculados": 164,
+        "taxa_ticket_por_pedido_pct": 27.8912
+      },
+      {
+        "mes_compra": "2024-08",
+        "pedidos": 599,
+        "tickets_vinculados": 152,
+        "taxa_ticket_por_pedido_pct": 25.3756
+      },
+      {
+        "mes_compra": "2024-09",
+        "pedidos": 521,
+        "tickets_vinculados": 151,
+        "taxa_ticket_por_pedido_pct": 28.9827
+      },
+      {
+        "mes_compra": "2024-10",
+        "pedidos": 545,
+        "tickets_vinculados": 139,
+        "taxa_ticket_por_pedido_pct": 25.5046
+      },
+      {
+        "mes_compra": "2024-11",
+        "pedidos": 585,
+        "tickets_vinculados": 163,
+        "taxa_ticket_por_pedido_pct": 27.8632
+      },
+      {
+        "mes_compra": "2024-12",
+        "pedidos": 520,
+        "tickets_vinculados": 139,
+        "taxa_ticket_por_pedido_pct": 26.7308
+      }
+    ],
+    "chamados_nov_dez_2023": 766,
+    "chamados_nov_dez_ligados_pedidos_nov": 603,
+    "pct_chamados_nov_dez_ligados_pedidos_nov": 78.7206
+  },
+  "Q6": {
+    "contagens": {
+      "pedidos": 15000,
+      "desconto_desconhecido_pedidos": 301,
+      "com_valor_reportado": 14921,
+      "gross_equal_within_cent": 0,
+      "reported_less_gross": 13079,
+      "reported_greater_gross": 1842,
+      "complete_net_orders": 14622,
+      "net_equal_within_cent": 0,
+      "discount_unknown_and_reported": 299,
+      "sem_valor_reportado": 79
+    },
+    "totais_brl": {
+      "gross_all": "176730490.88",
+      "net_zero_all": "165878066.67",
+      "reported_known": "38418252.65",
+      "gross_on_reported": "175861677.47",
+      "net_zero_on_reported": "165063804.87",
+      "gross_signed_residual": "-137443424.82",
+      "gross_abs_residual": "150370865.92",
+      "net_zero_signed_residual": "-126645552.22",
+      "reported_complete_net": "37592335.45",
+      "net_known_on_complete": "160643667.45",
+      "net_signed_residual_complete": "-123051332.00",
+      "gross_delivered": "118084610.50",
+      "net_zero_delivered": "110840777.33",
+      "reported_delivered_known": "25436542.40"
+    },
+    "pct_nao_conciliado_bruto": 100.0,
+    "maiores_divergencias_brutas": [
+      {
+        "pedido_id": 5915,
+        "status": "entregue",
+        "valor_total_reportado": "1090.13",
+        "valor_bruto_itens": "63816.49",
+        "valor_liquido_desconto_conhecido": "62693.75",
+        "valor_liquido_assumindo_nulo_zero": "62693.75",
+        "descontos_totalmente_conhecidos": true,
+        "diferenca_reportado_menos_bruto": "-62726.36",
+        "diferenca_reportado_menos_liquido_conhecido": "-61603.62"
+      },
+      {
+        "pedido_id": 14854,
+        "status": "cancelado",
+        "valor_total_reportado": "306.43",
+        "valor_bruto_itens": "60909.60",
+        "valor_liquido_desconto_conhecido": "59448.24",
+        "valor_liquido_assumindo_nulo_zero": "59448.24",
+        "descontos_totalmente_conhecidos": true,
+        "diferenca_reportado_menos_bruto": "-60603.17",
+        "diferenca_reportado_menos_liquido_conhecido": "-59141.81"
+      },
+      {
+        "pedido_id": 4192,
+        "status": "entregue",
+        "valor_total_reportado": "1769.63",
+        "valor_bruto_itens": "58537.32",
+        "valor_liquido_desconto_conhecido": "57162.60",
+        "valor_liquido_assumindo_nulo_zero": "57162.60",
+        "descontos_totalmente_conhecidos": true,
+        "diferenca_reportado_menos_bruto": "-56767.69",
+        "diferenca_reportado_menos_liquido_conhecido": "-55392.97"
+      },
+      {
+        "pedido_id": 5212,
+        "status": "entregue",
+        "valor_total_reportado": "2287.67",
+        "valor_bruto_itens": "58971.88",
+        "valor_liquido_desconto_conhecido": "57090.75",
+        "valor_liquido_assumindo_nulo_zero": "57090.75",
+        "descontos_totalmente_conhecidos": true,
+        "diferenca_reportado_menos_bruto": "-56684.21",
+        "diferenca_reportado_menos_liquido_conhecido": "-54803.08"
+      },
+      {
+        "pedido_id": 6280,
+        "status": "entregue",
+        "valor_total_reportado": "887.77",
+        "valor_bruto_itens": "57043.33",
+        "valor_liquido_desconto_conhecido": "55409.73",
+        "valor_liquido_assumindo_nulo_zero": "55409.73",
+        "descontos_totalmente_conhecidos": true,
+        "diferenca_reportado_menos_bruto": "-56155.56",
+        "diferenca_reportado_menos_liquido_conhecido": "-54521.96"
+      }
+    ],
+    "politica": "Valores brutos: soma de quantidade × preço praticado; alternativa líquida aplica desconto_aplicado como fração adicional apenas nos pedidos completos. Tolerância: diferença absoluta <= R$0,01, após agregar valores sem arredondar linhas. Não inclui frete, tributos, reembolso, taxas ou comprovantes de pagamento."
+  },
+  "Q7": {
+    "fornecedores": [
+      {
+        "fornecedor": "DeltaFornece ME",
+        "n_avaliacoes": 985,
+        "nota_media": 2.3046,
+        "nota_mediana": 2,
+        "avaliacoes_nota_ate_2": 590,
+        "avaliacoes_negativas_pct": 59.8985,
+        "pedidos_com_fornecedor": 3872,
+        "unidades_em_pedidos_entregues": 8671,
+        "pedidos_com_apenas_este_fornecedor": 596,
+        "tickets_nesses_pedidos": 147,
+        "tickets_pct_pedidos_monofornecedor": 24.6644,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 1007
+      },
+      {
+        "fornecedor": "SulFornece SA",
+        "n_avaliacoes": 845,
+        "nota_media": 3.6249,
+        "nota_mediana": 4,
+        "avaliacoes_nota_ate_2": 189,
+        "avaliacoes_negativas_pct": 22.3669,
+        "pedidos_com_fornecedor": 3644,
+        "unidades_em_pedidos_entregues": 8139,
+        "pedidos_com_apenas_este_fornecedor": 558,
+        "tickets_nesses_pedidos": 148,
+        "tickets_pct_pedidos_monofornecedor": 26.5233,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 956
+      },
+      {
+        "fornecedor": "NorteImport Ltda",
+        "n_avaliacoes": 824,
+        "nota_media": 3.6614,
+        "nota_mediana": 4.0,
+        "avaliacoes_nota_ate_2": 182,
+        "avaliacoes_negativas_pct": 22.0874,
+        "pedidos_com_fornecedor": 3483,
+        "unidades_em_pedidos_entregues": 7792,
+        "pedidos_com_apenas_este_fornecedor": 517,
+        "tickets_nesses_pedidos": 140,
+        "tickets_pct_pedidos_monofornecedor": 27.0793,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 928
+      },
+      {
+        "fornecedor": "TechBrasil Ltda",
+        "n_avaliacoes": 1027,
+        "nota_media": 3.7439,
+        "nota_mediana": 4,
+        "avaliacoes_nota_ate_2": 208,
+        "avaliacoes_negativas_pct": 20.2532,
+        "pedidos_com_fornecedor": 4265,
+        "unidades_em_pedidos_entregues": 9731,
+        "pedidos_com_apenas_este_fornecedor": 660,
+        "tickets_nesses_pedidos": 182,
+        "tickets_pct_pedidos_monofornecedor": 27.5758,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 1191
+      },
+      {
+        "fornecedor": "AlphaSupply",
+        "n_avaliacoes": 684,
+        "nota_media": 3.7982,
+        "nota_mediana": 4.0,
+        "avaliacoes_nota_ate_2": 124,
+        "avaliacoes_negativas_pct": 18.1287,
+        "pedidos_com_fornecedor": 2855,
+        "unidades_em_pedidos_entregues": 6209,
+        "pedidos_com_apenas_este_fornecedor": 380,
+        "tickets_nesses_pedidos": 106,
+        "tickets_pct_pedidos_monofornecedor": 27.8947,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 770
+      },
+      {
+        "fornecedor": "GlobalBR Comércio",
+        "n_avaliacoes": 912,
+        "nota_media": 3.8004,
+        "nota_mediana": 4.0,
+        "avaliacoes_nota_ate_2": 159,
+        "avaliacoes_negativas_pct": 17.4342,
+        "pedidos_com_fornecedor": 3569,
+        "unidades_em_pedidos_entregues": 7879,
+        "pedidos_com_apenas_este_fornecedor": 561,
+        "tickets_nesses_pedidos": 153,
+        "tickets_pct_pedidos_monofornecedor": 27.2727,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 964
+      },
+      {
+        "fornecedor": "FornecedorX",
+        "n_avaliacoes": 789,
+        "nota_media": 3.8137,
+        "nota_mediana": 4,
+        "avaliacoes_nota_ate_2": 148,
+        "avaliacoes_negativas_pct": 18.7579,
+        "pedidos_com_fornecedor": 3221,
+        "unidades_em_pedidos_entregues": 7093,
+        "pedidos_com_apenas_este_fornecedor": 494,
+        "tickets_nesses_pedidos": 142,
+        "tickets_pct_pedidos_monofornecedor": 28.7449,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 883
+      },
+      {
+        "fornecedor": "MegaDistribuidora",
+        "n_avaliacoes": 1241,
+        "nota_media": 3.8195,
+        "nota_mediana": 4,
+        "avaliacoes_nota_ate_2": 220,
+        "avaliacoes_negativas_pct": 17.7276,
+        "pedidos_com_fornecedor": 4694,
+        "unidades_em_pedidos_entregues": 11051,
+        "pedidos_com_apenas_este_fornecedor": 755,
+        "tickets_nesses_pedidos": 186,
+        "tickets_pct_pedidos_monofornecedor": 24.6358,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 1217
+      },
+      {
+        "fornecedor": "MarcoPolo Distribuição",
+        "n_avaliacoes": 693,
+        "nota_media": 3.8369,
+        "nota_mediana": 4,
+        "avaliacoes_nota_ate_2": 123,
+        "avaliacoes_negativas_pct": 17.7489,
+        "pedidos_com_fornecedor": 3019,
+        "unidades_em_pedidos_entregues": 6647,
+        "pedidos_com_apenas_este_fornecedor": 439,
+        "tickets_nesses_pedidos": 120,
+        "tickets_pct_pedidos_monofornecedor": 27.3349,
+        "tickets_pedidos_contendo_fornecedor_nao_atribuidos": 807
+      }
+    ],
+    "pedidos_multifornecedor": 10040,
+    "pedidos_monofornecedor": 4960,
+    "chamados_multifornecedor_sem_atribuicao": 2676,
+    "chamados_monofornecedor": 1324,
+    "chamados_trimestre_final_2023_por_causa": {
+      "dúvida": 228,
+      "cobrança": 152,
+      "defeito": 149,
+      "troca": 173,
+      "atraso": 220
+    }
+  }
+}
