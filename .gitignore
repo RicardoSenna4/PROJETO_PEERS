@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+_renders/
+_renders_v2/
+.coverage
+input/*.xlsx
+input/*.pptx
+outputs/*

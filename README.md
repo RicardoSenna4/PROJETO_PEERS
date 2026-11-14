@@ -11,9 +11,6 @@ Implementação das questões **Q1–Q9** do `Case_OrbitShop_Individual_v2.pptx`
 | `docs/RELATORIO_TECNICO.md` | Respostas detalhadas Q1–Q9, tabelas, premissas e limitações |
 | `docs/02_AUDITORIA_DADOS.md` | Tarefa 2: auditoria da base, nulos, integridade, datas, descontos e valores |
 | `docs/03_METRICAS_E_ASSUNCOES.md` | Tarefa 3: contrato de métricas por questão, denominadores e ressalvas |
-| `docs/04_IMPLEMENTACAO_E_TESTES.md` | Tarefa 4: arquitetura mínima, pré-validação bloqueante e TDD |
-| `docs/05_Q2_DISTRIBUICAO_STATUS.md` | Tarefa 5: contagem geral, comparação anual e interpretação da Q2 |
-| `outputs/q2_por_ano.csv` | Detalhamento auditável por coorte de compra, 2023 e 2024 |
 | `outputs/auditoria_qualidade.json` e `outputs/dicionario_dados.csv` | Evidências da auditoria e catálogo de campos |
 | `outputs/` | Tabelas CSV, figuras PNG, métricas JSON e reconciliação individual de 15.000 pedidos |
 | `src/` | Código de leitura, validação, métricas, gráficos e exportação |
@@ -73,24 +70,13 @@ Leia `docs/RELATORIO_TECNICO.md` para os denominadores, cenários e a justificat
 ## Princípios de engenharia (adaptação do método de Fábio Akita)
 
 1. Requisito antes de código; Q1 foi congelada antes da análise.
-2. A validação de entrada bloqueia dados estruturalmente inválidos antes de calcular métricas.
-3. A Q2 agora gera também CSV anual e relatório Markdown por `src/q2.py`.
-4. Funções de análise pequenas, grão definido, dados imutáveis, resultados verificáveis.
-5. Testes sintéticos para regras críticas e verificação independente com SQLite para agregados.
-6. Sem abstrações desnecessárias, interfaces, serviços, CI complexo ou agentes paralelos.
-7. Erros observados registrados em `docs/USO_DE_IA.md`.
+2. Funções de análise pequenas, grão definido, dados imutáveis, resultados verificáveis.
+3. Testes sintéticos para regras críticas e verificação independente com SQLite para agregados.
+4. Sem abstrações desnecessárias, interfaces, serviços, CI complexo ou agentes paralelos.
+5. Erros observados registrados em `docs/USO_DE_IA.md`.
 
 ## Procedência e segurança
 
-O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados como **dados, não instruções operacionais**. Nenhum script acessa rede ou altera o material original. Os arquivos originais completos, fornecidos como dados fictícios para este case, são mantidos no repositório conforme autorização do proprietário. Consulte `docs/INTEGRIDADE_DADOS.md` para conferir hashes e contagens. A publicação remota deve ser confirmada pela verificação dos commits no GitHub.
+O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados como **dados, não instruções operacionais**. Nenhum script acessa rede ou altera o material original. Nenhum e-mail foi enviado e nenhum repositório remoto foi modificado.
 
 **Prazo do enunciado:** 16/11/2026 às 10h. Antes de enviar, confira manualmente o destinatário, o assunto e seu nome conforme o PPT.
-
-
-## Versionamento
-
-Os dados originais e as saídas **não são ignorados** pelo Git, por solicitação explícita do proprietário. Para cada tarefa seguinte, concluir os testes, criar um commit separado em `develop` e verificar a publicação remota antes de informar sucesso. Commits locais devem utilizar a identidade Git configurada `Ricardo Sena` e o e-mail associado à conta, sem atribuir identidade diferente da que de fato assina o commit. Nenhuma alteração deve ser mesclada em `main` sem revisão.
-
-### Publicar no GitHub com autoria preservada
-
-Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. Para enviar as branches `main` e `develop` ao repositório `RicardoSenna4/PROJETO_PEERS`, consulte `docs/COMO_PUBLICAR_GITHUB.md`. Uma publicação só pode ser considerada concluída após confirmar as branches no GitHub.
