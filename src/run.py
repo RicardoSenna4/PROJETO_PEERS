@@ -4,6 +4,7 @@ import argparse,csv,json
 from pathlib import Path
 from .workbook import load_xlsx
 from .analysis import analyze
+from .validation import validate_input
 
 
 def write_csv(path:Path, rows:list[dict]):
@@ -55,6 +56,7 @@ def main():
     p.add_argument('--output',default='outputs')
     args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     data=load_xlsx(args.input);data.pop('Leia-me',None)
+    validate_input(data)
     metrics,reconciliation=analyze(data)
     (out/'metricas.json').write_text(json.dumps(metrics,ensure_ascii=False,indent=2),encoding='utf-8')
     for path,rows in {
