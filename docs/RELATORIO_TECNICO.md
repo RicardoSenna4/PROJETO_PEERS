@@ -136,7 +136,7 @@ As listas não coincidem integralmente: Moda passa de terceira em quantidade par
 
 O fornecedor **DeltaFornece ME** é um outlier negativo de avaliações: 59,90% das 985 avaliações têm nota ≤2, ante taxas significativamente inferiores nos outros fornecedores. Contudo, os 147 chamados nos 596 pedidos exclusivamente de seus produtos representam 24,66%, sem taxa anormalmente alta comparada aos pares.
 
-**Cautela de granularidade:** 10.040 pedidos contêm mais de um fornecedor e **2.676 chamados** referem-se a esses pedidos; o fornecedor responsável pelo ticket não é identificado. As colunas "fornecedor presente no pedido" são associações, não atribuição de culpa. As categorias dos chamados no último trimestre de 2023 são múltiplas: troca 173, defeito 149, cobrança 152, dúvida 228, atraso 220. O pico está temporalmente ligado ao volume excepcional de compras em novembro, portanto o problema da Delta é apenas parte da história.
+**Cautela de granularidade:** 10.040 pedidos contêm mais de um fornecedor e **2.676 chamados** referem-se a esses pedidos; o fornecedor responsável pelo ticket não é identificado. As colunas "fornecedor presente no pedido" são associações, não atribuição de culpa. As categorias dos chamados no último trimestre de 2023 são múltiplas: atraso 220, cobrança 152, defeito 149, dúvida 228, troca 173. O pico está temporalmente ligado ao volume excepcional de compras em novembro, portanto o problema da Delta é apenas parte da história.
 
 ![Q7](../outputs/q7_fornecedores.png)
 

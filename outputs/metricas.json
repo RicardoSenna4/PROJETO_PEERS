@@ -2136,11 +2136,11 @@
       }
     ],
     "chamados_trimestre_final_2023_por_causa": {
-      "troca": 173,
-      "defeito": 149,
+      "atraso": 220,
       "cobrança": 152,
+      "defeito": 149,
       "dúvida": 228,
-      "atraso": 220
+      "troca": 173
     },
     "restricao_atribuicao": "Ticket ligado ao pedido, não a produto ou fornecedor; comparar somente monofornecedor, sem inferir culpa."
   },

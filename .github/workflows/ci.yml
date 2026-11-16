@@ -22,6 +22,8 @@ jobs:
         run: python -m src.run --input input/Base_Dados_OrbitShop_v3.xlsx --output outputs
       - name: Memo e relatório
         run: python scripts/build_deliverables.py
+      - name: Reprodução isolada e integridade
+        run: python -m scripts.verify_reproducibility
       - name: Verificar integridade das fontes
         run: |
           echo "f400a18e7cc838a201981c8a3ae2234e1a32a385ba1a3b91348f4f7770ca6f4b  input/Base_Dados_OrbitShop_v3.xlsx" | sha256sum -c -

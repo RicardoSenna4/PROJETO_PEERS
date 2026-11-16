@@ -76,6 +76,11 @@ def build_q7(data: dict) -> dict:
     for (month, cause), n in sorted(month_causes.items()):
         detail.append({'mes_abertura':month,'categoria_problema':cause,'tickets':n})
 
+    causes_q4_2023 = Counter()
+    for (month, cause), count in month_causes.items():
+        if month in ('2023-10', '2023-11', '2023-12'):
+            causes_q4_2023[cause] += count
+
     # O fornecedor do produto avaliado é conhecido; o responsável por tickets
     # de pedido com diversos fornecedores é desconhecido.
     return {
@@ -94,7 +99,7 @@ def build_q7(data: dict) -> dict:
         'tickets_nov_2023': open_months['2023-11'],
         'tickets_dez_2023': open_months['2023-12'],
         'pico_causa_por_mes': detail,
-        'chamados_trimestre_final_2023_por_causa': dict(Counter({cause: sum(n for (month,cat),n in month_causes.items() if cat==cause and month in ('2023-10','2023-11','2023-12')) for cause in {cat for (month,cat) in month_causes}})),
+        'chamados_trimestre_final_2023_por_causa': {cause: causes_q4_2023[cause] for cause in sorted(causes_q4_2023)},
         'restricao_atribuicao': 'Ticket ligado ao pedido, não a produto ou fornecedor; comparar somente monofornecedor, sem inferir culpa.',
     }
 
