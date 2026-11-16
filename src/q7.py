@@ -94,6 +94,7 @@ def build_q7(data: dict) -> dict:
         'tickets_nov_2023': open_months['2023-11'],
         'tickets_dez_2023': open_months['2023-12'],
         'pico_causa_por_mes': detail,
+        'chamados_trimestre_final_2023_por_causa': dict(Counter({cause: sum(n for (month,cat),n in month_causes.items() if cat==cause and month in ('2023-10','2023-11','2023-12')) for cause in {cat for (month,cat) in month_causes}})),
         'restricao_atribuicao': 'Ticket ligado ao pedido, não a produto ou fornecedor; comparar somente monofornecedor, sem inferir culpa.',
     }
 

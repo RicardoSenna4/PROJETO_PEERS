@@ -49,13 +49,13 @@ memo=f'''# ORBITSHOP | Memo ao conselho
 
 **Q6 — Integridade.** Há {q6['contagens']['sem_valor_reportado']} totais ausentes. Nenhum dos {n(q6['contagens']['com_valor_reportado'])} demais reconcilia com os itens brutos; a reaplicação de descontos foi descartada por dupla dedução. O total registrado ({million(q6['totais_brl']['reported_known'])}) não é receita auditada; valores dos itens são apenas proxy, não receita reconhecida.
 
-**Q7 — Fornecedores.** DeltaFornece tem nota média {str(f"{delta['nota_media']:.2f}").replace('.',',')}/5 ({n(delta['n_avaliacoes'])} avaliações), mas sua taxa de chamados em pedidos exclusivamente seus ({pct(delta['tickets_pct_pedidos_monofornecedor'])}) não explica isoladamente o pico.
+**Q7 — Fornecedores.** DeltaFornece tem nota média {str(f"{delta['nota_media']:.2f}").replace('.',',')}/5 ({n(delta['n_avaliacoes'])} avaliações), mas sua taxa de chamados em pedidos exclusivamente seus ({pct(delta['incidencia_chamado_mono_pct'])}) não explica isoladamente o pico.
 
 **Q8 — Decisão.** Congelar a expansão de `paid_search` até apurar a causa dos cancelamentos, acompanhando sua taxa semanal; adia-se a intervenção no fornecedor com pior avaliação.
 
 **Q9 — Lacuna.** Solicitar motivos e histórico de cancelamentos, eventos de pagamento e campanhas por pedido, para distinguir fraude, falha operacional e perfil de aquisição.
 
-**Uso de IA.** ChatGPT auxiliou na implementação e análise. O protótipo reaplicava indevidamente descontos; a correção utiliza apenas o preço praticado e preserva {n(q6['contagens']['desconto_desconhecido_pedidos'])} pedidos com desconto desconhecido. Foram executados testes automatizados.
+**Uso de IA.** ChatGPT auxiliou na implementação e análise. O protótipo reaplicava indevidamente descontos; a correção usa apenas o preço praticado e preserva {n(q6['contagens']['desconto_desconhecido_pedidos'])} pedidos com descontos desconhecidos. Foram executados testes automatizados.
 '''
 # Count textual words excluding markup
 import re
@@ -71,8 +71,8 @@ cat_r=[{'categoria':r['categoria'],'receita':cur(r['valor_bruto_itens']),'unidad
 chan_r=[{'canal':r['canal_aquisicao'],'n':n(r['pedidos']),'c':n(r['cancelados']),'taxa':pct(r['taxa_cancelamento_pct']),
          'ticket':cur(r['ticket_medio_entregue_reportado']),'faltantes':r['entregues_sem_valor']} for r in q4['canais']]
 sup_r=[{'fornecedor':r['fornecedor'],'av':n(r['n_avaliacoes']),'media':f"{r['nota_media']:.2f}",
-      'neg':pct(r['avaliacoes_negativas_pct']),'suporte':pct(r['tickets_pct_pedidos_monofornecedor']),
-      'mono':n(r['pedidos_com_apenas_este_fornecedor'])} for r in q7['fornecedores']]
+      'neg':pct(r['avaliacoes_negativas_pct']),'suporte':pct(r['incidencia_chamado_mono_pct']),
+      'mono':n(r['pedidos_monofornecedor'])} for r in q7['fornecedores']]
 months_r=[{'mes':r['mes'],'pedidos':n(r['pedidos']),'tickets':n(r['chamados_abertos'])} for r in q5['meses']]
 
 report=f'''# Relatório técnico — OrbitShop (Q1–Q9)
@@ -124,23 +124,23 @@ As listas não coincidem integralmente: Moda passa de terceira em quantidade par
 - **Novembro/2023** teve {n(q5['maior_mes_por_ano']['2023']['pedidos'])} pedidos vs 500–600 na maioria dos meses: hipótese não comprovada de campanha/promoção; solicitar calendário de campanhas.
 - **Maio/2024**, com {n(q5['maior_mes_por_ano']['2024']['pedidos'])} pedidos, foi o maior mês de 2024, mas a amplitude anual é modesta; hipótese: variação sazonal/comercial normal, sem comprovação.
 - O pico de chamados foi em **novembro ({n(next(r['chamados_abertos'] for r in q5['meses'] if r['mes']=='2023-11'))}) e dezembro/2023 ({n(next(r['chamados_abertos'] for r in q5['meses'] if r['mes']=='2023-12'))})**. Dos {n(q5['chamados_nov_dez_2023'])} chamados abertos nos dois meses, {n(q5['chamados_nov_dez_ligados_pedidos_nov'])} ({pct(q5['pct_chamados_nov_dez_ligados_pedidos_nov'])}) se referem a pedidos feitos em novembro. O volume extra de pedidos contribui para o pico; o dataset não estabelece que a operação piorou.
-- Na coorte de novembro/2023, {n(next(r['pedidos_com_ticket'] for r in q5['coortes_suporte'] if r['mes_compra']=='2023-11'))} de {n(q5['maior_mes_por_ano']['2023']['pedidos'])} pedidos abriram chamados ({pct(next(r['incidencia_pedidos_com_ticket_pct'] for r in q5['coortes_suporte'] if r['mes_compra']=='2023-11'))}), similar aos meses vizinhos. Taxas por coorte em `outputs/q5_coortes_suporte.csv`.
+- Na coorte de novembro/2023, {n(next(r['pedidos_com_ticket'] for r in q5['coortes_suporte'] if r['mes_compra']=='2023-11'))} de {n(q5['maior_mes_por_ano']['2023']['pedidos'])} pedidos abriram ao menos um chamado ({pct(next(r['incidencia_pedidos_com_ticket_pct'] for r in q5['coortes_suporte'] if r['mes_compra']=='2023-11'))}), similar aos meses vizinhos. Taxas por coorte em `outputs/q5_coortes_suporte.csv`.
 
 ![Q5](../outputs/q5_mensal.png)
 
 ## Q6 — Reconciliação financeira crítica
 
 - {n(q6['contagens']['pedidos'])} pedidos; **{n(q6['contagens']['sem_valor_reportado'])} com `valor_total` ausente**; {n(q6['contagens']['desconto_desconhecido_pedidos'])} pedidos contendo desconto sem informação em pelo menos um item.
-- Dos {n(q6['contagens']['com_valor_reportado'])} valores disponíveis, **{n(q6['contagens']['gross_equal_within_cent'])} conciliam** à soma de `quantidade × preco_praticado` por pedido, com tolerância de R$ 0,01. O cenário de reaplicar desconto foi descartado por dupla dedução.
+- Dos {n(q6['contagens']['com_valor_reportado'])} valores disponíveis, **{n(q6['contagens']['gross_equal_within_cent'])} conciliam** à soma de `quantidade × preco_praticado` por pedido, com tolerância de R$ 0,01. O cenário de reaplicar o desconto foi descartado por **dupla dedução** do preço praticado.
 - **Soma de `Pedidos.valor_total` não nulos**: {cur(q6['totais_brl']['reported_known'])}. **Soma bruta dos itens nos mesmos pedidos**: {cur(q6['totais_brl']['gross_on_reported'])}. **Diferença assinada (reportado − bruto)**: {cur(q6['totais_brl']['gross_signed_residual'])}. A soma de diferenças absolutas é {cur(q6['totais_brl']['gross_abs_residual'])}; {n(q6['contagens']['reported_less_gross'])} totais menores e {n(q6['contagens']['reported_greater_gross'])} maiores.
-- **Todos os itens, inclusive pedidos sem total reportado**: {cur(q6['totais_brl']['gross_all'])}; apenas status `entregue`: {cur(q6['totais_brl']['gross_delivered'])}. Não reaplicar desconto ao preço praticado. Para valores desconhecidos, preservar ausência e pedir a regra financeira à empresa.
+- **Todos os itens, inclusive pedidos sem total reportado**: {cur(q6['totais_brl']['gross_all'])}; apenas status `entregue`: {cur(q6['totais_brl']['gross_delivered'])}. **Não reaplicar desconto** ao preço praticado já líquido de descontos conhecidos. Para valores ausentes, preservar a ausência e solicitar a regra financeira à empresa.
 - **Escolha para conselho:** não apresentar o valor registrado como receita auditada, nem a soma bruta como receita reconhecida. Para evidenciar escala comercial, reportar volume de pedidos, quantidade de itens e **valor bruto de itens em pedidos entregues** com rótulo de *proxy não contábil*, condicionando qualquer afirmação de receita/margem à conciliação com transações financeiras, reembolsos, frete, impostos e descontos efetivos. O arquivo `outputs/q6_reconciliacao_pedido.csv` contém todos os {n(q6['contagens']['pedidos'])} confrontos.
 
 ## Q7 — Avaliações de fornecedores e chamados de suporte
 
 {rows_md(sup_r,['fornecedor','av','media','neg','mono','suporte'],['Fornecedor','Avaliações','Nota média','% nota ≤ 2','Pedidos mono','Ticket/mono'])}
 
-O fornecedor **{delta['fornecedor']}** é um outlier negativo de avaliações: {pct(delta['avaliacoes_negativas_pct'])} das {n(delta['n_avaliacoes'])} avaliações têm nota ≤2, ante taxas significativamente inferiores nos outros fornecedores. Contudo, os {n(delta['tickets_nesses_pedidos'])} chamados nos {n(delta['pedidos_com_apenas_este_fornecedor'])} pedidos exclusivamente de seus produtos representam {pct(delta['tickets_pct_pedidos_monofornecedor'])}, sem taxa anormalmente alta comparada aos pares.
+O fornecedor **{delta['fornecedor']}** é um outlier negativo de avaliações: {pct(delta['avaliacoes_negativas_pct'])} das {n(delta['n_avaliacoes'])} avaliações têm nota ≤2, ante taxas significativamente inferiores nos outros fornecedores. Contudo, os {n(delta['tickets_nesses_pedidos'])} chamados nos {n(delta['pedidos_monofornecedor'])} pedidos exclusivamente de seus produtos representam {pct(delta['incidencia_chamado_mono_pct'])}, sem taxa anormalmente alta comparada aos pares.
 
 **Cautela de granularidade:** {n(q7['pedidos_multifornecedor'])} pedidos contêm mais de um fornecedor e **{n(q7['chamados_multifornecedor_sem_atribuicao'])} chamados** referem-se a esses pedidos; o fornecedor responsável pelo ticket não é identificado. As colunas "fornecedor presente no pedido" são associações, não atribuição de culpa. As categorias dos chamados no último trimestre de 2023 são múltiplas: {', '.join(f'{k} {n(v)}' for k,v in q7['chamados_trimestre_final_2023_por_causa'].items())}. O pico está temporalmente ligado ao volume excepcional de compras em novembro, portanto o problema da Delta é apenas parte da história.
 
@@ -156,7 +156,7 @@ O fornecedor **{delta['fornecedor']}** é um outlier negativo de avaliações: {
 
 ## Uso de IA e verificação
 
-IA foi utilizada para prototipar o leitor XLSX, cálculos, visualização e redação. **Correção metodológica:** foi descartada a dedução adicional sobre o preço praticado, que já contém desconto. Há 301 pedidos com informação de desconto ausente, não imputados. Houve ainda correção de uma dependência indevida do canal `paid_search` em teste sintético, e otimização de teste que reconstruía o índice de pedidos repetidamente. Foram executados **60 testes** com pytest, além de cruzamentos independentes com SQLite para status e aquisição. O relatório não atribui à IA verificação humana externa que não ocorreu.
+IA foi utilizada para prototipar o leitor XLSX, cálculos, visualização e redação. **Erro de simplificação identificado:** aplicar `desconto_aplicado` novamente ao `preco_praticado`, que já embute o desconto. Correção: somente `quantidade × preco_praticado` como proxy e 79 `valor_total` nulos mantidos. Há 301 pedidos com informação de desconto ausente. Houve ainda correção de uma dependência indevida do canal `paid_search` em teste sintético, e otimização de teste que reconstruía o índice de pedidos repetidamente. Foram executados **74 testes** com pytest, além de cruzamentos independentes com SQLite para status e aquisição. O relatório não atribui à IA verificação humana externa que não ocorreu.
 
 ## Limites
 

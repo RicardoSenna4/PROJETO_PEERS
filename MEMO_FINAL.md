@@ -14,7 +14,7 @@
 
 **Q5 — Sazonalidade.** Novembro/2023 teve 2.317 pedidos; hipótese: ação promocional, não comprovada. Dos 766 chamados abertos em nov.–dez., 603 referem-se a compras de novembro.
 
-**Q6 — Integridade.** Há 79 totais ausentes. Nenhum dos 14.921 demais reconcilia com os itens brutos; tampouco com o cenário líquido de descontos conhecidos. O total registrado (R$ 38,42 mi) não é receita auditada; valores dos itens são apenas proxy, não receita reconhecida.
+**Q6 — Integridade.** Há 79 totais ausentes. Nenhum dos 14.921 demais reconcilia com os itens brutos; a reaplicação de descontos foi descartada por dupla dedução. O total registrado (R$ 38,42 mi) não é receita auditada; valores dos itens são apenas proxy, não receita reconhecida.
 
 **Q7 — Fornecedores.** DeltaFornece tem nota média 2,30/5 (985 avaliações), mas sua taxa de chamados em pedidos exclusivamente seus (24,66%) não explica isoladamente o pico.
 
@@ -22,6 +22,6 @@
 
 **Q9 — Lacuna.** Solicitar motivos e histórico de cancelamentos, eventos de pagamento e campanhas por pedido, para distinguir fraude, falha operacional e perfil de aquisição.
 
-**Uso de IA.** ChatGPT auxiliou na implementação e análise. Um protótipo tratava descontos vazios como zero; a versão auditada separa 301 pedidos com descontos desconhecidos e rotula esse cenário. Foram executados testes automatizados.
+**Uso de IA.** ChatGPT auxiliou na implementação e análise. O protótipo reaplicava indevidamente descontos; a correção usa apenas o preço praticado e preserva 301 pedidos com descontos desconhecidos. Foram executados testes automatizados.
 
 <!-- Contagem aproximada: 346 palavras. -->

@@ -82,3 +82,9 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - Cenários hostis: ticket duplicado no mesmo pedido, pedido multiforncedor, manipulação de contagem do canal, divergência financeira injetada e recomendação dupla.
 - **74 testes aprovados**; **15/15 verificações de auditoria aprovadas** (execução `python -m pytest -q` e `python -m src.run`).
 - Nenhum dado original alterado; consultar `docs/INTEGRIDADE_DADOS.md`.
+
+### Correção pós-CI — compatibilidade de Q7 com gerador do memo
+
+- A execução remota de 16/11/2026 aprovou 74 testes e reproduziu as métricas, mas identificou `KeyError` no gerador de memo devido a campos legados de Q7.
+- Ajustado `scripts/build_deliverables.py` para ler `incidencia_chamado_mono_pct` e `pedidos_monofornecedor` e mantida a agregação explícita por causa no trimestre final de 2023 em `src/q7.py`.
+- Reexecutados localmente `python -m src.run`, `python scripts/build_deliverables.py` e `python -m pytest -q`: 74 testes e auditoria 15/15 aprovados; memo PDF A4 de 1 página, 346 palavras.

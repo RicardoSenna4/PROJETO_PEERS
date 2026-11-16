@@ -107,16 +107,16 @@ As listas não coincidem integralmente: Moda passa de terceira em quantidade par
 - **Novembro/2023** teve 2.317 pedidos vs 500–600 na maioria dos meses: hipótese não comprovada de campanha/promoção; solicitar calendário de campanhas.
 - **Maio/2024**, com 608 pedidos, foi o maior mês de 2024, mas a amplitude anual é modesta; hipótese: variação sazonal/comercial normal, sem comprovação.
 - O pico de chamados foi em **novembro (375) e dezembro/2023 (391)**. Dos 766 chamados abertos nos dois meses, 603 (78,72%) se referem a pedidos feitos em novembro. O volume extra de pedidos contribui para o pico; o dataset não estabelece que a operação piorou.
-- Na coorte de novembro/2023, 603 de 2.317 pedidos abriram chamados (26,02%), similar aos meses vizinhos. Taxas por coorte em `outputs/q5_coortes_suporte.csv`.
+- Na coorte de novembro/2023, 603 de 2.317 pedidos abriram ao menos um chamado (26,02%), similar aos meses vizinhos. Taxas por coorte em `outputs/q5_coortes_suporte.csv`.
 
 ![Q5](../outputs/q5_mensal.png)
 
 ## Q6 — Reconciliação financeira crítica
 
 - 15.000 pedidos; **79 com `valor_total` ausente**; 301 pedidos contendo desconto sem informação em pelo menos um item.
-- Dos 14.921 valores disponíveis, **0 conciliam** à soma de `quantidade × preco_praticado` por pedido, com tolerância de R$ 0,01; no cenário líquido de descontos inteiramente conhecidos, **0 conciliam** entre 14.622 pedidos verificáveis.
+- Dos 14.921 valores disponíveis, **0 conciliam** à soma de `quantidade × preco_praticado` por pedido, com tolerância de R$ 0,01. O cenário de reaplicar o desconto foi descartado por **dupla dedução** do preço praticado.
 - **Soma de `Pedidos.valor_total` não nulos**: R$ 38.418.252,65. **Soma bruta dos itens nos mesmos pedidos**: R$ 175.861.677,47. **Diferença assinada (reportado − bruto)**: R$ -137.443.424,82. A soma de diferenças absolutas é R$ 150.370.865,92; 13.079 totais menores e 1.842 maiores.
-- **Todos os itens, inclusive pedidos sem total reportado**: R$ 176.730.490,88; apenas status `entregue`: R$ 118.084.610,50. **Cenário de aplicar desconto percentual adicional**, imputando desconto nulo = 0 apenas como sensibilidade: R$ 165.878.066,67, **não é uma estimativa validada de receita**. Para valores desconhecidos, manter dados ausentes e cenário explícito.
+- **Todos os itens, inclusive pedidos sem total reportado**: R$ 176.730.490,88; apenas status `entregue`: R$ 118.084.610,50. **Não reaplicar desconto** ao preço praticado já líquido de descontos conhecidos. Para valores ausentes, preservar a ausência e solicitar a regra financeira à empresa.
 - **Escolha para conselho:** não apresentar o valor registrado como receita auditada, nem a soma bruta como receita reconhecida. Para evidenciar escala comercial, reportar volume de pedidos, quantidade de itens e **valor bruto de itens em pedidos entregues** com rótulo de *proxy não contábil*, condicionando qualquer afirmação de receita/margem à conciliação com transações financeiras, reembolsos, frete, impostos e descontos efetivos. O arquivo `outputs/q6_reconciliacao_pedido.csv` contém todos os 15.000 confrontos.
 
 ## Q7 — Avaliações de fornecedores e chamados de suporte
@@ -136,7 +136,7 @@ As listas não coincidem integralmente: Moda passa de terceira em quantidade par
 
 O fornecedor **DeltaFornece ME** é um outlier negativo de avaliações: 59,90% das 985 avaliações têm nota ≤2, ante taxas significativamente inferiores nos outros fornecedores. Contudo, os 147 chamados nos 596 pedidos exclusivamente de seus produtos representam 24,66%, sem taxa anormalmente alta comparada aos pares.
 
-**Cautela de granularidade:** 10.040 pedidos contêm mais de um fornecedor e **2.676 chamados** referem-se a esses pedidos; o fornecedor responsável pelo ticket não é identificado. As colunas "fornecedor presente no pedido" são associações, não atribuição de culpa. As categorias dos chamados no último trimestre de 2023 são múltiplas: dúvida 228, cobrança 152, defeito 149, troca 173, atraso 220. O pico está temporalmente ligado ao volume excepcional de compras em novembro, portanto o problema da Delta é apenas parte da história.
+**Cautela de granularidade:** 10.040 pedidos contêm mais de um fornecedor e **2.676 chamados** referem-se a esses pedidos; o fornecedor responsável pelo ticket não é identificado. As colunas "fornecedor presente no pedido" são associações, não atribuição de culpa. As categorias dos chamados no último trimestre de 2023 são múltiplas: troca 173, defeito 149, cobrança 152, dúvida 228, atraso 220. O pico está temporalmente ligado ao volume excepcional de compras em novembro, portanto o problema da Delta é apenas parte da história.
 
 ![Q7](../outputs/q7_fornecedores.png)
 
@@ -150,7 +150,7 @@ O fornecedor **DeltaFornece ME** é um outlier negativo de avaliações: 59,90% 
 
 ## Uso de IA e verificação
 
-IA foi utilizada para prototipar o leitor XLSX, cálculos, visualização e redação. **Erro de simplificação identificado no protótipo:** tratar `desconto_aplicado` ausente como zero ao estimar valor líquido. Correção: distinguir cenário apenas com descontos observados do cenário nulo=zero, explicitamente sinalizado; **301 pedidos afetados**. Houve ainda correção de uma dependência indevida do canal `paid_search` em teste sintético, e otimização de teste que reconstruía o índice de pedidos repetidamente. Foram executados **14 testes** com pytest, além de cruzamentos independentes com SQLite para status e aquisição. O relatório não atribui à IA verificação humana externa que não ocorreu.
+IA foi utilizada para prototipar o leitor XLSX, cálculos, visualização e redação. **Erro de simplificação identificado:** aplicar `desconto_aplicado` novamente ao `preco_praticado`, que já embute o desconto. Correção: somente `quantidade × preco_praticado` como proxy e 79 `valor_total` nulos mantidos. Há 301 pedidos com informação de desconto ausente. Houve ainda correção de uma dependência indevida do canal `paid_search` em teste sintético, e otimização de teste que reconstruía o índice de pedidos repetidamente. Foram executados **74 testes** com pytest, além de cruzamentos independentes com SQLite para status e aquisição. O relatório não atribui à IA verificação humana externa que não ocorreu.
 
 ## Limites
 

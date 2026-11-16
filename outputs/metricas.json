@@ -2135,6 +2135,13 @@
         "tickets": 46
       }
     ],
+    "chamados_trimestre_final_2023_por_causa": {
+      "troca": 173,
+      "defeito": 149,
+      "cobrança": 152,
+      "dúvida": 228,
+      "atraso": 220
+    },
     "restricao_atribuicao": "Ticket ligado ao pedido, não a produto ou fornecedor; comparar somente monofornecedor, sem inferir culpa."
   },
   "Q8_Q9": {
