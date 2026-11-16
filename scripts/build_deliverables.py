@@ -39,23 +39,23 @@ memo=f'''# ORBITSHOP | Memo ao conselho
 
 {q1}
 
-**Q2 — Cancelamentos.** Dos {n(q2['n'])} pedidos, {n(next(r['pedidos'] for r in q2['tabela_status'] if r['status']=='cancelado'))} ({pct(next(r['percentual'] for r in q2['tabela_status'] if r['status']=='cancelado'))}) estão cancelados. A taxa passou de {pct(q2['anos']['2023']['taxa_cancelamento_pct'])} em 2023 para {pct(q2['anos']['2024']['taxa_cancelamento_pct'])} em 2024 (+{q2['variacao_taxa_pontos_percentuais']:.2f} p.p.), mas o número caiu {abs(q2['variacao_cancelados_pct']):.1f}%. Nenhuma das declarações da diretoria se reproduz nesta definição.
+**Q2 — Cancelamentos.** Dos {n(q2['n'])} pedidos, {n(next(r['pedidos'] for r in q2['tabela_status'] if r['status']=='cancelado'))} ({pct(next(r['percentual'] for r in q2['tabela_status'] if r['status']=='cancelado'))}) estão cancelados. A taxa passou de {pct(q2['anos']['2023']['taxa_cancelamento_pct'])} em 2023 para {pct(q2['anos']['2024']['taxa_cancelamento_pct'])} em 2024 (+{str(f"{q2['variacao_taxa_pontos_percentuais']:.2f}").replace('.',',')} p.p.), mas o número caiu {str(f"{abs(q2['variacao_cancelados_pct']):.1f}").replace('.',',')}%. Nenhuma das declarações da diretoria se reproduz nesta definição.
 
-**Q3 — Categorias.** Entre pedidos entregues, Eletrônicos lidera valor bruto de itens ({million(q3[0]['valor_bruto_itens'])}) e unidades ({n(q3[0]['unidades'])}). Os rankings divergem: Moda é terceira em unidades e quinta em valor, devido ao menor preço médio.
+**Q3 — Categorias.** Entre pedidos entregues, Eletrônicos lidera o valor dos itens a preço praticado ({million(q3[0]['valor_bruto_itens'])}) e unidades ({n(q3[0]['unidades'])}). Os rankings divergem: Moda é terceira em unidades e quinta em valor, devido ao menor preço médio.
 
 **Q4 — Aquisição.** `paid_search` cancela {pct(paid['taxa_cancelamento_pct'])} ({n(paid['cancelados'])}/{n(paid['pedidos'])}), ante 11,67%–12,38% nos demais canais; concentra {pct(q4['fracao_cancelamentos_paid_search_pct'])} dos cancelamentos. Seu ticket médio registrado em pedidos entregues é {cur(paid['ticket_medio_entregue_reportado'])}, sem superioridade material sobre os demais.
 
-**Q5 — Sazonalidade.** Novembro/2023 teve {n(q5['maior_mes_por_ano']['2023']['pedidos'])} pedidos; hipótese: ação promocional, não comprovada. Dos {n(q5['chamados_nov_dez_2023'])} chamados abertos em nov.–dez., {n(q5['chamados_nov_dez_ligados_pedidos_nov'])} referem-se a compras de novembro.
+**Q5 — Sazonalidade.** Novembro/2023 teve {n(q5['maior_mes_por_ano']['2023']['pedidos'])} pedidos; possível campanha, sem comprovação. Dos {n(q5['chamados_nov_dez_2023'])} chamados abertos em nov.–dez., {n(q5['chamados_nov_dez_ligados_pedidos_nov'])} referem-se a compras de novembro.
 
-**Q6 — Integridade.** Há {q6['contagens']['sem_valor_reportado']} totais ausentes. Nenhum dos {n(q6['contagens']['com_valor_reportado'])} demais reconcilia com os itens brutos; a reaplicação de descontos foi descartada por dupla dedução. O total registrado ({million(q6['totais_brl']['reported_known'])}) não é receita auditada; valores dos itens são apenas proxy, não receita reconhecida.
+**Q6 — Integridade.** Há {q6['contagens']['sem_valor_reportado']} totais ausentes; nenhum dos {n(q6['contagens']['com_valor_reportado'])} demais reconcilia (± R$ 0,01). Na amostra comparável, totais registrados somam {million(q6['totais_brl']['reported_known'])}; itens, {million(q6['totais_brl']['gross_on_reported'])}. Descontos já integram os preços praticados. Nenhum agregado equivale a receita auditada.
 
 **Q7 — Fornecedores.** DeltaFornece tem nota média {str(f"{delta['nota_media']:.2f}").replace('.',',')}/5 ({n(delta['n_avaliacoes'])} avaliações), mas sua taxa de chamados em pedidos exclusivamente seus ({pct(delta['incidencia_chamado_mono_pct'])}) não explica isoladamente o pico.
 
-**Q8 — Decisão.** Congelar a expansão de `paid_search` até apurar a causa dos cancelamentos, acompanhando sua taxa semanal; adia-se a intervenção no fornecedor com pior avaliação.
+**Q8 — Decisão.** Suspender apenas a expansão de `paid_search` e investigar seus cancelamentos, monitorando a taxa semanal. O custo é adiar crescimento potencial e a intervenção no fornecedor com pior avaliação.
 
 **Q9 — Lacuna.** Solicitar motivos e histórico de cancelamentos, eventos de pagamento e campanhas por pedido, para distinguir fraude, falha operacional e perfil de aquisição.
 
-**Uso de IA.** ChatGPT auxiliou na implementação e análise. O protótipo reaplicava indevidamente descontos; a correção usa apenas o preço praticado e preserva {n(q6['contagens']['desconto_desconhecido_pedidos'])} pedidos com descontos desconhecidos. Foram executados testes automatizados.
+**Uso de IA.** ChatGPT auxiliou na análise, código e testes. Corrigimos dupla dedução de descontos, contagem de tickets por pedido e ordenação não determinística de causas. As recomendações não foram tratadas como causalidade comprovada; os cálculos foram reproduzidos e auditados.
 '''
 # Count textual words excluding markup
 import re
