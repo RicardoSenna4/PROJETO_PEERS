@@ -10,6 +10,9 @@ from .q3 import build_q3, render_q3_report, plot_q3
 from .q4 import render_q4_report, plot_q4
 from .q5 import render_q5_report, plot_q5
 from .q6 import render_q6_report
+from .q7 import render_q7_report
+from .q8_q9 import render_decision_report
+from .audit_review import audit_independent, render_audit_report
 
 
 def write_csv(path:Path, rows:list[dict]):
@@ -64,6 +67,9 @@ def main():
     p.add_argument('--q4-report',default='docs/07_Q4_AQUISICAO.md')
     p.add_argument('--q5-report',default='docs/08_Q5_SERIE_MENSAL.md')
     p.add_argument('--q6-report',default='docs/09_Q6_RECONCILIACAO.md')
+    p.add_argument('--q7-report',default='docs/10_Q7_FORNECEDORES.md')
+    p.add_argument('--decision-report',default='docs/11_Q8_Q9_DECISAO.md')
+    p.add_argument('--audit-report',default='docs/12_AUDITORIA_ADVERSARIAL.md')
     args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     data=load_xlsx(args.input);data.pop('Leia-me',None)
     validate_input(data)
@@ -80,7 +86,8 @@ def main():
       'q4_segmento_ano.csv':metrics['Q4']['estratos_segmento_ano'],
       'q6_status.csv':metrics['Q6']['por_status'],'q6_cupom.csv':metrics['Q6']['por_cupom'],
       'q5_mensal.csv':metrics['Q5']['meses'],'q5_coortes_suporte.csv':metrics['Q5']['coortes_suporte'],
-      'q6_reconciliacao_pedido.csv':reconciliation,'q7_fornecedores.csv':metrics['Q7']['fornecedores']
+      'q6_reconciliacao_pedido.csv':reconciliation,'q7_fornecedores.csv':metrics['Q7']['fornecedores'],
+      'q7_causas_mensais.csv':metrics['Q7']['pico_causa_por_mes']
     }.items():write_csv(out/path,rows)
     charts(metrics,out)
     plot_q3(q3,out)
@@ -94,9 +101,20 @@ def main():
     q2_report.write_text(render_q2_report(metrics['Q2']), encoding='utf-8')
     for name,content in ((args.q4_report,render_q4_report(metrics['Q4'])),
                          (args.q5_report,render_q5_report(metrics['Q5'])),
-                         (args.q6_report,render_q6_report(metrics['Q6']))):
+                         (args.q6_report,render_q6_report(metrics['Q6'])),
+                         (args.q7_report,render_q7_report(metrics['Q7'])),
+                         (args.decision_report,render_decision_report(metrics['Q8_Q9']))):
         path=Path(name);path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text(content,encoding='utf-8')
+    (out/'q8_q9_decisao.json').write_text(json.dumps(metrics['Q8_Q9'],ensure_ascii=False,indent=2),encoding='utf-8')
+    report = audit_independent(data, metrics)
+    (out/'q12_auditoria.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
+    audit_path = Path(args.audit_report)
+    audit_path.parent.mkdir(parents=True, exist_ok=True)
+    audit_path.write_text(render_audit_report(report),encoding='utf-8')
+    if report['falhas']:
+        raise SystemExit('FALHA na auditoria adversarial: '+str([x['id'] for x in report['falhas']]))
+    print(f'Auditoria independente: {report["aprovadas"]}/{report["total"]} verificações aprovadas')
     print('Análise concluída: '+str(out.resolve()))
     print('Pedidos=',metrics['Q2']['n'],'cancelados=',next(r for r in metrics['Q2']['tabela_status'] if r['status']=='cancelado'))
     print('Reconciliação=',metrics['Q6']['contagens'])

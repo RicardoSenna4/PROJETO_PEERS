@@ -66,10 +66,19 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - Teste independente `tests/test_q3_categorias.py`: joins com três tabelas, somas por categoria em centavos inteiros via SQLite, cenários de filtro de status, unidades e integridade.
 - A base e o PPT originais não foram alterados.
 
+## Tarefas 7, 8 e 9 — 16/11/2026
 
-## Validação das Tarefas 7–9
+- TDD: novos testes RED (ausência dos módulos), GREEN após implementação; **60 testes aprovados** no conjunto completo.
+- Q4: canais, tickets comparativos e estratos por segmento/ano; confirmação SQL independente de 15.000 pedidos e 2.537 cancelamentos.
+- Q5: 24 meses, 4.000 tickets, conferência SQL independente de incidência sobre pedidos distintos (não tickets/pedidos).
+- Q6: 15.000 pedidos, 14.921 comparáveis, 79 ausentes, nenhum reconciliado ±R$ 0,01; SQLite em centavos inteiros. Nenhuma dupla dedução.
+- Arquivos de entrada possuem SHA-256 iguais ao registrado no topo.
 
-- Testes sintéticos de grão pedido, denominação de taxas, cardinalidade e tratamento de valores ausentes.
-- Auditoria independente dos totais por canal e mês, e da soma de itens em centavos.
-- 15.000 pedidos, 14.921 valores reportados, 79 ausentes e nenhuma conciliação dentro de R$0,01 na base original.
-- Desconto não reaplicado ao preço praticado.
+## Tarefas 10, 11 e 12 — 16/11/2026
+
+- Q7: pedidos monofornecedor versus multiforncedor, preservação dos 4.000 tickets; incidência definida por **pedidos com ticket**, não quantidade de tickets.
+- Q8–Q9: somente uma ação imediata, com denominadores de Q4, custo de oportunidade, pergunta não respondida e campos necessários para teste causal.
+- Auditoria Q2–Q9: `src/audit_review.py` gera 15 comparações independentes em SQLite, inclusive Q3 em centavos, Q6 na amostra comparável e Q7 sem replicar chamados.
+- Cenários hostis: ticket duplicado no mesmo pedido, pedido multiforncedor, manipulação de contagem do canal, divergência financeira injetada e recomendação dupla.
+- **74 testes aprovados**; **15/15 verificações de auditoria aprovadas** (execução `python -m pytest -q` e `python -m src.run`).
+- Nenhum dado original alterado; consultar `docs/INTEGRIDADE_DADOS.md`.

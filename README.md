@@ -108,11 +108,31 @@ Este projeto também é distribuído como checkout Git integral e bundle, inclui
 - Conferência independente de agregados por SQLite com preços convertidos a centavos inteiros, sem aplicar desconto duas vezes.
 - Suíte completa após implementação: **53 testes aprovados** (novembro de 2026).
 
+## Tarefas 7–9 — Implementação (16/11/2026)
 
-## Tarefas 7–9 (16/11/2026)
+- `src/q4.py`: taxas por canal de **aquisição**, segmentos/anos e dois tickets descritivos não conciliados. Relatório em `docs/07_Q4_AQUISICAO.md`.
+- `src/q5.py`: calendário de 24 meses, picos por ano e incidência correta de pedidos com chamado por coorte. Relatório em `docs/08_Q5_SERIE_MENSAL.md`.
+- `src/q6.py`: reconciliação de 15 mil pedidos, sem aplicar desconto duas vezes ou preencher 79 totais nulos. Relatório em `docs/09_Q6_RECONCILIACAO.md`.
+- O comando `python -m src.run` produz automaticamente relatórios, CSVs e gráficos atualizados.
+- `python -m pytest -q` executa testes sintéticos e conferências independentes via SQLite (60 aprovados).
+- Os arquivos `input/*.xlsx` e `input/*.pptx` foram preservados integralmente.
+- O memo de uma página foi atualizado pelo gerador com as correções financeiras e de incidência; toda nova publicação exige revisão do conteúdo.
 
-- src/q4.py: aquisição e cancelamentos com estratos e ticket comparativo (não receita).
-- src/q5.py: 24 meses e incidência de pedidos distintos com ticket.
-- src/q6.py: conciliação por pedido sem desconto duplicado, com totais ausentes preservados.
-- python -m src.run gera relatórios Q4–Q6 e CSVs; python -m pytest -q verifica a regressão.
-- Todos os dados fictícios originais permanecem no repositório sem exclusões.
+## Tarefas 10–12 (Q7–Q9 e auditoria independente)
+
+- `src/q7.py`: Q7, avaliações por fornecedor e incidência de **pedidos monofornecedor com chamados**. Tickets de pedidos multiforncedor ficam sem atribuição individual.
+- `src/q8_q9.py`: uma única ação para Q8, explicitação do custo de oportunidade e uma pergunta material não respondida para Q9, com campos a solicitar.
+- `src/audit_review.py`: auditoria adversarial que **recalcula 15 invariantes em SQLite**, incluindo dinheiro em centavos inteiros e confrontos de granulação de dados.
+- `tests/test_q7_fornecedores.py`, `tests/test_q8_q9_decisao.py`, `tests/test_auditoria_adversarial.py`: cenários reais e artificiais que devem falhar quando métricas são adulteradas.
+- Relatórios: `docs/10_Q7_FORNECEDORES.md`, `docs/11_Q8_Q9_DECISAO.md` e `docs/12_AUDITORIA_ADVERSARIAL.md`.
+
+Execute na raiz do repositório, após preparar as dependências indicadas acima:
+
+```bash
+python -m src.run
+python -m pytest -q
+```
+
+O comando gera `outputs/q7_fornecedores.csv`, `outputs/q7_causas_mensais.csv`, `outputs/q8_q9_decisao.json` e `outputs/q12_auditoria.json`, além das saídas anteriores. A CLI encerra com falha se alguma checagem independente não corresponder ao resultado reportado.
+
+**Importante:** o recorte utilizado é o histórico de pedidos 2023–2024; a planilha original e a Q1 congelada permanecem inalteradas. As saídas financeiras são *proxies comerciais*, não receita auditada. A publicação no GitHub é feita separadamente do programa de análise.

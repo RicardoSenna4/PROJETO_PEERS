@@ -13,3 +13,7 @@
 
 11. **Tarefa 2 — Desconto embutido no preço:** 36.439 de 36.439 linhas com desconto conhecido obedecem à relação `preco_praticado ≈ preco_unitario × (1−desconto_aplicado)` até R$ 0,01. O cenário de “valor líquido” que subtrai novamente `desconto_aplicado` não deve ser usado para tomada de decisão. Não houve alteração silenciosa do XLSX; os arquivos anteriores de simulação continuam rastreáveis.
 12. **Tarefa 3 — Contrato formal:** `docs/03_METRICAS_E_ASSUNCOES.md` é a referência atualizada para fórmulas, grão, populações, lacunas e testes de aceitação de Q2–Q9.
+
+13. **Tarefa 10 — Incidência por pedido, não por ticket:** a base possui um ticket por pedido, mas a função agora distingue claramente `tickets_em_pedidos_mono` de `pedidos_mono_com_chamado`. O teste sintético de dois tickets no mesmo pedido exige a incidência de 100%, não 200%.
+14. **Tarefa 11 — Ação prioritária única:** apenas congelar expansão do canal de aquisição `paid_search`, sem encerrar automaticamente campanhas existentes nem atribuir causalidade/benefício financeiro à medida. Delta é hipótese alternativa, não a escolha final.
+15. **Tarefa 12 — Auditoria externa da lógica:** usar SQLite para conferir agregações e monetários com centavos inteiros; manter riscos P0/P1 explícitos apesar dos testes aprovados.

@@ -31,7 +31,13 @@ Foi feito um teste explícito da relação entre preço de catálogo, desconto e
 - Um teste de ID duplicado inicialmente falhou por exigir a expressão `duplicad` na mensagem, enquanto a exceção real empregava `duplicatas`; o teste foi corrigido para verificar o mesmo comportamento por `duplica` sem reduzir a exigência de rejeição da duplicação.
 - Executados 46 testes, incluindo validação independente de totais por coorte com SQLite e integração da CLI com CSV e PNG. A verificação de consistência foi técnica, não prova de causalidade ou de receita auditada.
 
+## Correção das Tarefas 7–9 (16/11/2026)
 
-## Tarefas 7–9
+- Q4: foram separados ticket reportado (não conciliado) e ticket proxy de itens entregues; controle observacional B2B/B2C e ano.
+- Q5: corrigida a incidência por coorte: agora conta **pedidos distintos com ao menos um ticket**, e não tickets/pedidos.
+- Q6: a simulação anterior de desconto adicional foi **retirada** dos CSVs e resultados correntes porque o desconto já está embutido em `preco_praticado`. Não houve preenchimento de valores faltantes.
+- Os erros foram identificados e corrigidos no trabalho assistido; não se atribui auditoria a terceiros.
 
-Foram corrigidas duas simplificações da análise: a incidência de suporte usa pedidos distintos com tickets, não número de tickets; o preço praticado já incorpora descontos, que não podem ser reaplicados. A análise separa ticket reportado de proxy comercial e apresenta limitações de causalidade e reconhecimento contábil.
+## Incremento das tarefas 10–12 (2026-11-16)
+
+A ferramenta auxiliou na implementação de Q7, Q8–Q9 e dos testes adversariais. Uma simplificação identificada foi a possibilidade de calcular chamados por pedido usando **quantidade de tickets** como numerador: isso só era equivalente nesta base porque não há chamados repetidos para o mesmo pedido. A correção separa `pedidos_mono_com_chamado` e `tickets_em_pedidos_mono`, com caso sintético de dois tickets para um pedido. Outra verificação relevante distinguiu recomendações condicionais e associação estatística de efeito causal. Os cálculos foram confrontados com 15 consultas independentes em SQLite. Nenhuma conferência externa humana foi presumida.

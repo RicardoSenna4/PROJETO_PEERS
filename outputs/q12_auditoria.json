@@ -1,0 +1,479 @@
+{
+  "checagens": [
+    {
+      "id": "Q2_STATUS",
+      "ok": true,
+      "calculado_sqlite": {
+        "cancelado": 2537,
+        "devolvido": 1133,
+        "em_transito": 1371,
+        "entregue": 9959
+      },
+      "reportado": {
+        "entregue": 9959,
+        "cancelado": 2537,
+        "em_transito": 1371,
+        "devolvido": 1133
+      },
+      "criterio": "Distribuição por status de pedido distinto",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q2_ANO",
+      "ok": true,
+      "calculado_sqlite": {
+        "2023": [
+          8386,
+          1407
+        ],
+        "2024": [
+          6614,
+          1130
+        ]
+      },
+      "reportado": {
+        "2023": [
+          8386,
+          1407
+        ],
+        "2024": [
+          6614,
+          1130
+        ]
+      },
+      "criterio": "Coorte definida por data_pedido",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q3_CATEGORIA",
+      "ok": true,
+      "calculado_sqlite": {
+        "Alimentos & Bebidas": [
+          6981,
+          947058639
+        ],
+        "Bebês & Crianças": [
+          6960,
+          1093541492
+        ],
+        "Beleza & Saúde": [
+          9346,
+          1696251983
+        ],
+        "Casa & Decoração": [
+          11925,
+          1756890423
+        ],
+        "Eletrônicos": [
+          12436,
+          2199902444
+        ],
+        "Esporte & Lazer": [
+          8058,
+          1429363688
+        ],
+        "Livros & Papelaria": [
+          7185,
+          1295193161
+        ],
+        "Moda": [
+          10321,
+          1390259220
+        ]
+      },
+      "reportado": {
+        "Eletrônicos": [
+          12436,
+          2199902444
+        ],
+        "Casa & Decoração": [
+          11925,
+          1756890423
+        ],
+        "Beleza & Saúde": [
+          9346,
+          1696251983
+        ],
+        "Esporte & Lazer": [
+          8058,
+          1429363688
+        ],
+        "Moda": [
+          10321,
+          1390259220
+        ],
+        "Livros & Papelaria": [
+          7185,
+          1295193161
+        ],
+        "Bebês & Crianças": [
+          6960,
+          1093541492
+        ],
+        "Alimentos & Bebidas": [
+          6981,
+          947058639
+        ]
+      },
+      "criterio": "Valor de itens entregues = quantidade × preço praticado",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q4_AQUISICAO",
+      "ok": true,
+      "calculado_sqlite": {
+        "indicação": [
+          3658,
+          453
+        ],
+        "orgânico": [
+          3616,
+          426
+        ],
+        "paid_search": [
+          3965,
+          1219
+        ],
+        "redes_sociais": [
+          3761,
+          439
+        ]
+      },
+      "reportado": {
+        "paid_search": [
+          3965,
+          1219
+        ],
+        "indicação": [
+          3658,
+          453
+        ],
+        "orgânico": [
+          3616,
+          426
+        ],
+        "redes_sociais": [
+          3761,
+          439
+        ]
+      },
+      "criterio": "Canal de aquisição cadastrado no cliente",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q5_SERIE",
+      "ok": true,
+      "calculado_sqlite": {
+        "2023-01": 525,
+        "2023-02": 492,
+        "2023-03": 613,
+        "2023-04": 564,
+        "2023-05": 579,
+        "2023-06": 531,
+        "2023-07": 542,
+        "2023-08": 584,
+        "2023-09": 527,
+        "2023-10": 554,
+        "2023-11": 2317,
+        "2023-12": 558,
+        "2024-01": 542,
+        "2024-02": 499,
+        "2024-03": 551,
+        "2024-04": 558,
+        "2024-05": 608,
+        "2024-06": 498,
+        "2024-07": 588,
+        "2024-08": 599,
+        "2024-09": 521,
+        "2024-10": 545,
+        "2024-11": 585,
+        "2024-12": 520
+      },
+      "reportado": {
+        "2023-01": 525,
+        "2023-02": 492,
+        "2023-03": 613,
+        "2023-04": 564,
+        "2023-05": 579,
+        "2023-06": 531,
+        "2023-07": 542,
+        "2023-08": 584,
+        "2023-09": 527,
+        "2023-10": 554,
+        "2023-11": 2317,
+        "2023-12": 558,
+        "2024-01": 542,
+        "2024-02": 499,
+        "2024-03": 551,
+        "2024-04": 558,
+        "2024-05": 608,
+        "2024-06": 498,
+        "2024-07": 588,
+        "2024-08": 599,
+        "2024-09": 521,
+        "2024-10": 545,
+        "2024-11": 585,
+        "2024-12": 520
+      },
+      "criterio": "24 coortes mensais por data_pedido",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q5_CONTAGEM_MESES",
+      "ok": true,
+      "calculado_sqlite": 24,
+      "reportado": 24,
+      "criterio": "Meses consecutivos de 2023-01 a 2024-12",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q5_TICKETS",
+      "ok": true,
+      "calculado_sqlite": {
+        "2023-01": 73,
+        "2023-02": 118,
+        "2023-03": 159,
+        "2023-04": 133,
+        "2023-05": 168,
+        "2023-06": 157,
+        "2023-07": 138,
+        "2023-08": 160,
+        "2023-09": 151,
+        "2023-10": 156,
+        "2023-11": 375,
+        "2023-12": 391,
+        "2024-01": 133,
+        "2024-02": 127,
+        "2024-03": 117,
+        "2024-04": 137,
+        "2024-05": 183,
+        "2024-06": 149,
+        "2024-07": 142,
+        "2024-08": 158,
+        "2024-09": 174,
+        "2024-10": 127,
+        "2024-11": 154,
+        "2024-12": 220
+      },
+      "reportado": {
+        "2023-01": 73,
+        "2023-02": 118,
+        "2023-03": 159,
+        "2023-04": 133,
+        "2023-05": 168,
+        "2023-06": 157,
+        "2023-07": 138,
+        "2023-08": 160,
+        "2023-09": 151,
+        "2023-10": 156,
+        "2023-11": 375,
+        "2023-12": 391,
+        "2024-01": 133,
+        "2024-02": 127,
+        "2024-03": 117,
+        "2024-04": 137,
+        "2024-05": 183,
+        "2024-06": 149,
+        "2024-07": 142,
+        "2024-08": 158,
+        "2024-09": 174,
+        "2024-10": 127,
+        "2024-11": 154,
+        "2024-12": 220
+      },
+      "criterio": "Relógio de abertura, não data de compra",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q6_POPULACAO",
+      "ok": true,
+      "calculado_sqlite": [
+        15000,
+        79,
+        14921,
+        14921
+      ],
+      "reportado": [
+        15000,
+        79,
+        14921,
+        14921
+      ],
+      "criterio": "Um pedido por linha, sem imputar 79 nulos",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q6_VALORES_CENTAVOS",
+      "ok": true,
+      "calculado_sqlite": [
+        3841825265,
+        17586167747
+      ],
+      "reportado": [
+        3841825265,
+        17586167747
+      ],
+      "criterio": "Centavos inteiros com universo comparável, sem duplo desconto",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q7_NOTAS",
+      "ok": true,
+      "calculado_sqlite": {
+        "AlphaSupply": [
+          684,
+          124
+        ],
+        "DeltaFornece ME": [
+          985,
+          590
+        ],
+        "FornecedorX": [
+          789,
+          148
+        ],
+        "GlobalBR Comércio": [
+          912,
+          159
+        ],
+        "MarcoPolo Distribuição": [
+          693,
+          123
+        ],
+        "MegaDistribuidora": [
+          1241,
+          220
+        ],
+        "NorteImport Ltda": [
+          824,
+          182
+        ],
+        "SulFornece SA": [
+          845,
+          189
+        ],
+        "TechBrasil Ltda": [
+          1027,
+          208
+        ]
+      },
+      "reportado": {
+        "DeltaFornece ME": [
+          985,
+          590
+        ],
+        "SulFornece SA": [
+          845,
+          189
+        ],
+        "NorteImport Ltda": [
+          824,
+          182
+        ],
+        "TechBrasil Ltda": [
+          1027,
+          208
+        ],
+        "AlphaSupply": [
+          684,
+          124
+        ],
+        "GlobalBR Comércio": [
+          912,
+          159
+        ],
+        "FornecedorX": [
+          789,
+          148
+        ],
+        "MegaDistribuidora": [
+          1241,
+          220
+        ],
+        "MarcoPolo Distribuição": [
+          693,
+          123
+        ]
+      },
+      "criterio": "Avaliações: grão produto-avaliação",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q7_PEDIDOS_MONO_MULTI",
+      "ok": true,
+      "calculado_sqlite": [
+        10040,
+        4960
+      ],
+      "reportado": [
+        10040,
+        4960
+      ],
+      "criterio": "Fornecedor único por pedido, não por linha",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q7_TICKETS_MONO_MULTI",
+      "ok": true,
+      "calculado_sqlite": [
+        2676,
+        1324
+      ],
+      "reportado": [
+        2676,
+        1324
+      ],
+      "criterio": "Não replicar tickets multiforncedor pelos fornecedores",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q8_ACAO_UNICA",
+      "ok": true,
+      "calculado_sqlite": 1,
+      "reportado": 1,
+      "criterio": "Conselho aceita apenas uma ação imediata",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q8_NUMERADOR",
+      "ok": true,
+      "calculado_sqlite": 1219,
+      "reportado": 1219,
+      "criterio": "Taxa de cancelamento sem extrapolação causal",
+      "prioridade_se_falhar": "P0"
+    },
+    {
+      "id": "Q9_LACUNA",
+      "ok": true,
+      "calculado_sqlite": 1,
+      "reportado": 1,
+      "criterio": "Uma pergunta material não respondida",
+      "prioridade_se_falhar": "P0"
+    }
+  ],
+  "total": 15,
+  "aprovadas": 15,
+  "falhas": [],
+  "riscos_abertos": [
+    {
+      "prioridade": "P0",
+      "tema": "Conciliação financeira",
+      "evidencia": "Valor total do pedido e itens divergentes; faltam componentes e razão contábil."
+    },
+    {
+      "prioridade": "P1",
+      "tema": "Causalidade de cancelamentos",
+      "evidencia": "Sem motivo, timestamp do cancelamento e campanha por pedido."
+    },
+    {
+      "prioridade": "P1",
+      "tema": "Atribuição de suporte",
+      "evidencia": "Tickets de pedidos com mais de um fornecedor não têm produto responsável."
+    },
+    {
+      "prioridade": "P2",
+      "tema": "Viés de seleção das avaliações",
+      "evidencia": "Não há evidência de representatividade de quem avaliou."
+    }
+  ]
+}
