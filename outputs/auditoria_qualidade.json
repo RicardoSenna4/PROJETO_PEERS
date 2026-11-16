@@ -1,0 +1,872 @@
+{
+  "source": {
+    "file": "Base_Dados_OrbitShop_v3.xlsx",
+    "sha256": "f400a18e7cc838a201981c8a3ae2234e1a32a385ba1a3b91348f4f7770ca6f4b"
+  },
+  "data_contract": "Aba Leia-me: as seis tabelas não foram limpas; inconsistências são intencionais.",
+  "tables": {
+    "Clientes": {
+      "rows": 3000,
+      "columns": [
+        "id",
+        "nome",
+        "email",
+        "cidade",
+        "estado",
+        "data_cadastro",
+        "segmento",
+        "canal_aquisicao"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 3000,
+          "types": {
+            "int": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "nome": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 1519,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "email": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 3000,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "cidade": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 40,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "estado": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 23,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "data_cadastro": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 467,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": []
+        },
+        "segmento": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 2,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "B2B": 611,
+            "B2C": 2389
+          }
+        },
+        "canal_aquisicao": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 4,
+          "types": {
+            "str": 3000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "indicação": 739,
+            "orgânico": 731,
+            "paid_search": 766,
+            "redes_sociais": 764
+          }
+        }
+      }
+    },
+    "Produtos": {
+      "rows": 200,
+      "columns": [
+        "id",
+        "nome",
+        "categoria",
+        "subcategoria",
+        "preco_unitario",
+        "custo_unitario",
+        "fornecedor"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 200,
+          "types": {
+            "int": 200
+          },
+          "sample_missing_ids": []
+        },
+        "nome": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 200,
+          "types": {
+            "str": 200
+          },
+          "sample_missing_ids": []
+        },
+        "categoria": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 8,
+          "types": {
+            "str": 200
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "Alimentos & Bebidas": 19,
+            "Bebês & Crianças": 19,
+            "Beleza & Saúde": 25,
+            "Casa & Decoração": 33,
+            "Eletrônicos": 34,
+            "Esporte & Lazer": 22,
+            "Livros & Papelaria": 20,
+            "Moda": 28
+          }
+        },
+        "subcategoria": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 41,
+          "types": {
+            "str": 200
+          },
+          "sample_missing_ids": []
+        },
+        "preco_unitario": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 200,
+          "types": {
+            "float": 197,
+            "int": 3
+          },
+          "sample_missing_ids": []
+        },
+        "custo_unitario": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 199,
+          "types": {
+            "float": 198,
+            "int": 2
+          },
+          "sample_missing_ids": []
+        },
+        "fornecedor": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 9,
+          "types": {
+            "str": 200
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "AlphaSupply": 17,
+            "DeltaFornece ME": 24,
+            "FornecedorX": 19,
+            "GlobalBR Comércio": 22,
+            "MarcoPolo Distribuição": 18,
+            "MegaDistribuidora": 30,
+            "NorteImport Ltda": 22,
+            "SulFornece SA": 22,
+            "TechBrasil Ltda": 26
+          }
+        }
+      }
+    },
+    "Pedidos": {
+      "rows": 15000,
+      "columns": [
+        "id",
+        "cliente_id",
+        "data_pedido",
+        "status",
+        "valor_total",
+        "canal_venda",
+        "cupom_desconto"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 15000,
+          "types": {
+            "int": 15000
+          },
+          "sample_missing_ids": []
+        },
+        "cliente_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 2977,
+          "types": {
+            "int": 15000
+          },
+          "sample_missing_ids": []
+        },
+        "data_pedido": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 731,
+          "types": {
+            "str": 15000
+          },
+          "sample_missing_ids": []
+        },
+        "status": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 4,
+          "types": {
+            "str": 15000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "cancelado": 2537,
+            "devolvido": 1133,
+            "em_transito": 1371,
+            "entregue": 9959
+          }
+        },
+        "valor_total": {
+          "missing": 79,
+          "missing_pct": 0.527,
+          "unique_nonmissing": 14633,
+          "types": {
+            "float": 14765,
+            "int": 156
+          },
+          "sample_missing_ids": [
+            12704,
+            12523,
+            5308,
+            2160,
+            1146
+          ]
+        },
+        "canal_venda": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 3,
+          "types": {
+            "str": 15000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "app": 4998,
+            "marketplace": 5023,
+            "site": 4979
+          }
+        },
+        "cupom_desconto": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 2,
+          "types": {
+            "str": 15000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "não": 9721,
+            "sim": 5279
+          }
+        }
+      }
+    },
+    "Itens_Pedido": {
+      "rows": 36740,
+      "columns": [
+        "id",
+        "pedido_id",
+        "produto_id",
+        "quantidade",
+        "preco_praticado",
+        "desconto_aplicado"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 36740,
+          "types": {
+            "int": 36740
+          },
+          "sample_missing_ids": []
+        },
+        "pedido_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 15000,
+          "types": {
+            "int": 36740
+          },
+          "sample_missing_ids": []
+        },
+        "produto_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 200,
+          "types": {
+            "int": 36740
+          },
+          "sample_missing_ids": []
+        },
+        "quantidade": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 5,
+          "types": {
+            "int": 36740
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "1": 7410,
+            "2": 7315,
+            "3": 7335,
+            "4": 7281,
+            "5": 7399
+          }
+        },
+        "preco_praticado": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 5550,
+          "types": {
+            "float": 36407,
+            "int": 333
+          },
+          "sample_missing_ids": []
+        },
+        "desconto_aplicado": {
+          "missing": 301,
+          "missing_pct": 0.819,
+          "unique_nonmissing": 31,
+          "types": {
+            "float": 33872,
+            "int": 2567
+          },
+          "sample_missing_ids": [
+            100,
+            108,
+            156,
+            255,
+            358
+          ]
+        }
+      }
+    },
+    "Tickets_Suporte": {
+      "rows": 4000,
+      "columns": [
+        "id",
+        "pedido_id",
+        "cliente_id",
+        "categoria_problema",
+        "data_abertura",
+        "data_resolucao",
+        "status"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 4000,
+          "types": {
+            "int": 4000
+          },
+          "sample_missing_ids": []
+        },
+        "pedido_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 4000,
+          "types": {
+            "int": 4000
+          },
+          "sample_missing_ids": []
+        },
+        "cliente_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 2201,
+          "types": {
+            "int": 4000
+          },
+          "sample_missing_ids": []
+        },
+        "categoria_problema": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 5,
+          "types": {
+            "str": 4000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "atraso": 961,
+            "cobrança": 667,
+            "defeito": 668,
+            "dúvida": 945,
+            "troca": 759
+          }
+        },
+        "data_abertura": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 720,
+          "types": {
+            "str": 4000
+          },
+          "sample_missing_ids": []
+        },
+        "data_resolucao": {
+          "missing": 1653,
+          "missing_pct": 41.325,
+          "unique_nonmissing": 688,
+          "types": {
+            "str": 2347
+          },
+          "sample_missing_ids": [
+            1,
+            5,
+            6,
+            8,
+            12
+          ]
+        },
+        "status": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 3,
+          "types": {
+            "str": 4000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "aberto": 806,
+            "escalado": 847,
+            "resolvido": 2347
+          }
+        }
+      }
+    },
+    "Avaliacoes": {
+      "rows": 8000,
+      "columns": [
+        "id",
+        "pedido_id",
+        "produto_id",
+        "cliente_id",
+        "nota",
+        "comentario",
+        "data_avaliacao"
+      ],
+      "pk_duplicates": 0,
+      "pk_duplicate_samples": [],
+      "fields": {
+        "id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 8000,
+          "types": {
+            "int": 8000
+          },
+          "sample_missing_ids": []
+        },
+        "pedido_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 8000,
+          "types": {
+            "int": 8000
+          },
+          "sample_missing_ids": []
+        },
+        "produto_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 200,
+          "types": {
+            "int": 8000
+          },
+          "sample_missing_ids": []
+        },
+        "cliente_id": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 2791,
+          "types": {
+            "int": 8000
+          },
+          "sample_missing_ids": []
+        },
+        "nota": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 5,
+          "types": {
+            "int": 8000
+          },
+          "sample_missing_ids": [],
+          "counts": {
+            "1": 909,
+            "2": 1034,
+            "3": 1271,
+            "4": 2053,
+            "5": 2733
+          }
+        },
+        "comentario": {
+          "missing": 1679,
+          "missing_pct": 20.988,
+          "unique_nonmissing": 13,
+          "types": {
+            "str": 6321
+          },
+          "sample_missing_ids": [
+            1,
+            3,
+            13,
+            17,
+            28
+          ]
+        },
+        "data_avaliacao": {
+          "missing": 0,
+          "missing_pct": 0.0,
+          "unique_nonmissing": 724,
+          "types": {
+            "str": 8000
+          },
+          "sample_missing_ids": []
+        }
+      }
+    }
+  },
+  "foreign_keys": {
+    "Pedidos.cliente_id → Clientes.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Itens_Pedido.pedido_id → Pedidos.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Itens_Pedido.produto_id → Produtos.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Tickets_Suporte.pedido_id → Pedidos.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Tickets_Suporte.cliente_id → Clientes.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Avaliacoes.pedido_id → Pedidos.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Avaliacoes.produto_id → Produtos.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    },
+    "Avaliacoes.cliente_id → Clientes.id": {
+      "orphans": 0,
+      "sample_record_ids": []
+    }
+  },
+  "domains": {
+    "Clientes.segmento": {
+      "observed_counts": {
+        "B2B": 611,
+        "B2C": 2389
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Clientes.canal_aquisicao": {
+      "observed_counts": {
+        "indicação": 739,
+        "orgânico": 731,
+        "paid_search": 766,
+        "redes_sociais": 764
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Pedidos.status": {
+      "observed_counts": {
+        "cancelado": 2537,
+        "devolvido": 1133,
+        "em_transito": 1371,
+        "entregue": 9959
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Pedidos.canal_venda": {
+      "observed_counts": {
+        "app": 4998,
+        "marketplace": 5023,
+        "site": 4979
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Pedidos.cupom_desconto": {
+      "observed_counts": {
+        "não": 9721,
+        "sim": 5279
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Tickets_Suporte.status": {
+      "observed_counts": {
+        "aberto": 806,
+        "escalado": 847,
+        "resolvido": 2347
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    },
+    "Tickets_Suporte.categoria_problema": {
+      "observed_counts": {
+        "atraso": 961,
+        "cobrança": 667,
+        "defeito": 668,
+        "dúvida": 945,
+        "troca": 759
+      },
+      "out_of_expected_domain": 0,
+      "sample_ids": [],
+      "note": "domínio de validação operacional assumido a partir das categorias presentes e do caso; não é documentação do sistema de origem"
+    }
+  },
+  "numeric": {
+    "Produtos.preco_unitario": {
+      "rule": "positive",
+      "nonmissing": 200,
+      "minimum": "36.28",
+      "maximum": "3495.8",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Produtos.custo_unitario": {
+      "rule": "positive",
+      "nonmissing": 200,
+      "minimum": "16.67",
+      "maximum": "2319.44",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Pedidos.valor_total": {
+      "rule": "positive",
+      "nonmissing": 14921,
+      "minimum": "30.42",
+      "maximum": "14999.84",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Itens_Pedido.quantidade": {
+      "rule": "positive_int",
+      "nonmissing": 36740,
+      "minimum": "1",
+      "maximum": "5",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Itens_Pedido.preco_praticado": {
+      "rule": "positive",
+      "nonmissing": 36740,
+      "minimum": "25.4",
+      "maximum": "3495.8",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Itens_Pedido.desconto_aplicado": {
+      "rule": "fraction",
+      "nonmissing": 36439,
+      "minimum": "0",
+      "maximum": "0.3",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    },
+    "Avaliacoes.nota": {
+      "rule": "rating",
+      "nonmissing": 8000,
+      "minimum": "1",
+      "maximum": "5",
+      "invalid_count": 0,
+      "invalid_sample_ids": []
+    }
+  },
+  "dates": {
+    "Clientes.data_cadastro": {
+      "nonmissing": 3000,
+      "invalid_count": 0,
+      "sample_invalid_ids": [],
+      "first": "2022-11-06",
+      "last": "2024-12-28"
+    },
+    "Pedidos.data_pedido": {
+      "nonmissing": 15000,
+      "invalid_count": 0,
+      "sample_invalid_ids": [],
+      "first": "2023-01-01",
+      "last": "2024-12-31"
+    },
+    "Tickets_Suporte.data_abertura": {
+      "nonmissing": 4000,
+      "invalid_count": 0,
+      "sample_invalid_ids": [],
+      "first": "2023-01-04",
+      "last": "2024-12-31"
+    },
+    "Tickets_Suporte.data_resolucao": {
+      "nonmissing": 2347,
+      "invalid_count": 0,
+      "sample_invalid_ids": [],
+      "first": "2023-01-10",
+      "last": "2025-01-20"
+    },
+    "Avaliacoes.data_avaliacao": {
+      "nonmissing": 8000,
+      "invalid_count": 0,
+      "sample_invalid_ids": [],
+      "first": "2023-01-05",
+      "last": "2024-12-31"
+    }
+  },
+  "logical": {
+    "pedidos_sem_itens": 0,
+    "clientes_com_cadastro_posterior_ao_pedido": 0,
+    "tickets_cliente_diverge_do_pedido": 0,
+    "avaliacoes_cliente_diverge_do_pedido": 0,
+    "avaliacoes_produto_nao_consta_do_pedido": 0,
+    "tickets_anteriores_ao_pedido": 0,
+    "avaliacoes_anteriores_ao_pedido": 0,
+    "resolucoes_anteriores_a_abertura": 0,
+    "resolvidos_sem_data_resolucao": 0,
+    "nao_resolvidos_com_data_resolucao": 0,
+    "resolucoes_em_2025": 51,
+    "pedidos_fora_2023_2024": 0,
+    "tickets_abertos_fora_2023_2024": 0,
+    "avaliacoes_fora_2023_2024": 0,
+    "preco_catalogo_menor_que_custo": 0,
+    "email_repetido_apos_normalizar": 0,
+    "itens_mesmo_produto_repetido_no_pedido": 0,
+    "mais_de_um_ticket_por_pedido": 0,
+    "mais_de_uma_avaliacao_por_pedido": 0
+  },
+  "discounts_and_price": {
+    "known": 36439,
+    "price_matches_catalog_minus_discount_exact": 35943,
+    "price_matches_catalog_minus_discount_within_1_cent": 36439,
+    "maximum_absolute_difference": "0.01",
+    "not_matching_sample_ids": []
+  },
+  "financial": {
+    "orders_total": 15000,
+    "orders_missing_reported_total": 79,
+    "orders_reported_total_available": 14921,
+    "orders_gross_items_match_within_1_cent": 0,
+    "orders_gross_items_different": 14921,
+    "sum_reported_over_available_orders": "38418252.65",
+    "sum_gross_items_over_same_orders": "175861677.47",
+    "signed_difference_reported_minus_gross": "-137443424.82",
+    "absolute_difference_sum": "150370865.92",
+    "largest_difference_examples": [
+      {
+        "id": 5915,
+        "status": "entregue",
+        "reported": "1090.13",
+        "gross": "63816.49",
+        "reported_minus_gross": "-62726.36"
+      },
+      {
+        "id": 14854,
+        "status": "cancelado",
+        "reported": "306.43",
+        "gross": "60909.60",
+        "reported_minus_gross": "-60603.17"
+      },
+      {
+        "id": 4192,
+        "status": "entregue",
+        "reported": "1769.63",
+        "gross": "58537.32",
+        "reported_minus_gross": "-56767.69"
+      },
+      {
+        "id": 5212,
+        "status": "entregue",
+        "reported": "2287.67",
+        "gross": "58971.88",
+        "reported_minus_gross": "-56684.21"
+      },
+      {
+        "id": 6280,
+        "status": "entregue",
+        "reported": "887.77",
+        "gross": "57043.33",
+        "reported_minus_gross": "-56155.56"
+      }
+    ]
+  },
+  "join_risk": {
+    "pedidos_distintos": 15000,
+    "linhas_itens": 36740,
+    "itens_por_pedido_media": 2.4493,
+    "pedidos_monofornecedor": 4960,
+    "pedidos_multifornecedor": 10040,
+    "tickets_de_pedidos_multifornecedor": 2676,
+    "nota": "Itens é 1:N em relação a Pedidos; avaliações e tickets são por pedido e não provam fornecedor responsável."
+  }
+}

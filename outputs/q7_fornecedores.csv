@@ -1,0 +1,10 @@
+﻿fornecedor,n_avaliacoes,nota_media,nota_mediana,avaliacoes_nota_ate_2,avaliacoes_negativas_pct,pedidos_com_fornecedor,unidades_em_pedidos_entregues,pedidos_monofornecedor,pedidos_com_apenas_este_fornecedor,pedidos_mono_com_chamado,incidencia_chamado_mono_pct,tickets_em_pedidos_mono,tickets_nesses_pedidos,tickets_mono_nov_dez_2023,pedidos_multi_com_fornecedor
+DeltaFornece ME,985,2.3046,2,590,59.8985,3872,8671,596,596,147,24.6644,147,147,34,3276
+SulFornece SA,845,3.6249,4,189,22.3669,3644,8139,558,558,148,26.5233,148,148,26,3086
+NorteImport Ltda,824,3.6614,4.0,182,22.0874,3483,7792,517,517,140,27.0793,140,140,24,2966
+TechBrasil Ltda,1027,3.7439,4,208,20.2532,4265,9731,660,660,182,27.5758,182,182,26,3605
+AlphaSupply,684,3.7982,4.0,124,18.1287,2855,6209,380,380,106,27.8947,106,106,22,2475
+GlobalBR Comércio,912,3.8004,4.0,159,17.4342,3569,7879,561,561,153,27.2727,153,153,34,3008
+FornecedorX,789,3.8137,4,148,18.7579,3221,7093,494,494,142,28.7449,142,142,24,2727
+MegaDistribuidora,1241,3.8195,4,220,17.7276,4694,11051,755,755,186,24.6358,186,186,31,3939
+MarcoPolo Distribuição,693,3.8369,4,123,17.7489,3019,6647,439,439,120,27.3349,120,120,20,2580
