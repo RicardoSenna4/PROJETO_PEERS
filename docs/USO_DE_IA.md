@@ -30,3 +30,8 @@ Foi feito um teste explícito da relação entre preço de catálogo, desconto e
 - Assistência com IA utilizada para elaborar a pré-validação, escrever casos sintéticos e gerar o relatório Q2 a partir de resultados reproduzíveis.
 - Um teste de ID duplicado inicialmente falhou por exigir a expressão `duplicad` na mensagem, enquanto a exceção real empregava `duplicatas`; o teste foi corrigido para verificar o mesmo comportamento por `duplica` sem reduzir a exigência de rejeição da duplicação.
 - Executados 46 testes, incluindo validação independente de totais por coorte com SQLite e integração da CLI com CSV e PNG. A verificação de consistência foi técnica, não prova de causalidade ou de receita auditada.
+
+
+## Tarefas 7–9
+
+Foram corrigidas duas simplificações da análise: a incidência de suporte usa pedidos distintos com tickets, não número de tickets; o preço praticado já incorpora descontos, que não podem ser reaplicados. A análise separa ticket reportado de proxy comercial e apresenta limitações de causalidade e reconhecimento contábil.

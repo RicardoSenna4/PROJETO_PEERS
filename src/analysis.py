@@ -124,119 +124,21 @@ def categories_metrics(data: dict, eligible_status: set[str]|None=None) -> list[
 
 
 def acquisition_metrics(data: dict) -> dict:
-    customers=indexed(data['Clientes'])
-    grouped=defaultdict(lambda:{'pedidos':0,'cancelados':0,'entregues':0,'soma_entregue_valor_valido':Decimal(0),
-                            'entregues_com_valor':0,'entregues_sem_valor':0,'b2b_pedidos':0})
-    strata=defaultdict(lambda:[0,0])
-    for o in data['Pedidos']:
-        cli=customers[o['cliente_id']]; canal=cli['canal_aquisicao'];d=grouped[canal]
-        d['pedidos']+=1; d['cancelados']+=int(o['status']=='cancelado')
-        d['b2b_pedidos']+=int(cli['segmento']=='B2B')
-        for key in ((canal,cli['segmento']),(canal,o['data_pedido'][:4])):
-            strata[key][0]+=1;strata[key][1]+=int(o['status']=='cancelado')
-        if o['status']=='entregue':
-            d['entregues']+=1
-            if o['valor_total'] is not None:
-                d['entregues_com_valor']+=1
-                d['soma_entregue_valor_valido']+=money(o['valor_total'])
-            else:d['entregues_sem_valor']+=1
-    customer_counts=Counter(c['canal_aquisicao'] for c in customers.values())
-    active=defaultdict(set)
-    for o in data['Pedidos']:active[customers[o['cliente_id']]['canal_aquisicao']].add(o['cliente_id'])
-    out=[]
-    for canal,d in grouped.items():
-        out.append({'canal_aquisicao':canal,'clientes_cadastrados':customer_counts[canal],
-           'clientes_com_pedido':len(active[canal]),'pedidos':d['pedidos'],'participacao_pct':percent(d['pedidos'],len(data['Pedidos'])),
-           'cancelados':d['cancelados'],'taxa_cancelamento_pct':percent(d['cancelados'],d['pedidos']),
-           'entregues':d['entregues'],'entregues_com_valor':d['entregues_com_valor'],
-           'entregues_sem_valor':d['entregues_sem_valor'],
-           'ticket_medio_entregue_reportado':str(cent(d['soma_entregue_valor_valido']/d['entregues_com_valor'])) if d['entregues_com_valor'] else None,
-           'pedidos_b2b':d['b2b_pedidos']})
-    out.sort(key=lambda d:d['taxa_cancelamento_pct'],reverse=True)
-    overall=sum(d['cancelados'] for d in out)
-    return {'canais':out,'fracao_cancelamentos_paid_search_pct':percent(next((d['cancelados'] for d in out if d['canal_aquisicao']=='paid_search'),0),overall),
-      'estratos':[{'canal':key[0],'estrato':key[1],'pedidos':v[0],'cancelados':v[1],
-                   'taxa_cancelamento_pct':percent(v[1],v[0])} for key,v in sorted(strata.items())]}
+    """Compatibilidade: implementação revisada da Tarefa 7."""
+    from .q4 import build_q4
+    return build_q4(data)
 
 
 def monthly_metrics(data: dict) -> dict:
-    order_month=Counter(o['data_pedido'][:7] for o in data['Pedidos'])
-    support_month=Counter(t['data_abertura'][:7] for t in data['Tickets_Suporte'])
-    months=[f'{year}-{month:02d}' for year in (2023,2024) for month in range(1,13)]
-    table=[{'mes':month,'pedidos':order_month.get(month,0),'chamados_abertos':support_month.get(month,0)} for month in months]
-    peak_by_year={str(y):max((r for r in table if r['mes'].startswith(str(y))),key=lambda r:r['pedidos']) for y in (2023,2024)}
-    order_cohort=Counter(o['data_pedido'][:7] for o in data['Pedidos'])
-    orders=indexed(data['Pedidos'])
-    cohort_tickets=Counter(orders[t['pedido_id']]['data_pedido'][:7] for t in data['Tickets_Suporte'])
-    cohort=[{'mes_compra':k,'pedidos':order_cohort[k],'tickets_vinculados':cohort_tickets[k],
-             'taxa_ticket_por_pedido_pct':percent(cohort_tickets[k],order_cohort[k])} for k in months]
-    opened_nov_dec=[t for t in data['Tickets_Suporte'] if t['data_abertura'][:7] in ('2023-11','2023-12')]
-    linked_to_nov=sum(orders[t['pedido_id']]['data_pedido'][:7]=='2023-11' for t in opened_nov_dec)
-    return {'meses':table,'maior_mes_por_ano':peak_by_year,'coortes_suporte':cohort,
-       'chamados_nov_dez_2023':len(opened_nov_dec),'chamados_nov_dez_ligados_pedidos_nov':linked_to_nov,
-       'pct_chamados_nov_dez_ligados_pedidos_nov':percent(linked_to_nov,len(opened_nov_dec))}
+    """Compatibilidade: implementação revisada da Tarefa 8."""
+    from .q5 import build_q5
+    return build_q5(data)
 
 
-def reconcile(data: dict) -> tuple[dict,list[dict]]:
-    """Cenário líquido só nos pedidos sem nenhum desconto desconhecido."""
-    by_order=defaultdict(list)
-    for row in data['Itens_Pedido']:by_order[row['pedido_id']].append(row)
-    result=[]
-    totals=defaultdict(Decimal)
-    counts=Counter()
-    for o in data['Pedidos']:
-        lines=by_order[o['id']]
-        gross=sum((money(i['quantidade'])*money(i['preco_praticado']) for i in lines),Decimal(0))
-        knows=all(i['desconto_aplicado'] is not None for i in lines)
-        net_known=sum((money(i['quantidade'])*money(i['preco_praticado'])*(1-money(i['desconto_aplicado'])) for i in lines),Decimal(0)) if knows else None
-        net_zero=sum((money(i['quantidade'])*money(i['preco_praticado'])*(1-money(i['desconto_aplicado'] or 0)) for i in lines),Decimal(0))
-        reported=money(o['valor_total']) if o['valor_total'] is not None else None
-        rg=reported-gross if reported is not None else None
-        rn=reported-net_known if reported is not None and knows else None
-        counts['pedidos']+=1
-        counts['desconto_desconhecido_pedidos']+=int(not knows)
-        totals['gross_all']+=gross
-        totals['net_zero_all']+=net_zero
-        if o['status']=='entregue':
-            totals['gross_delivered']+=gross
-            totals['net_zero_delivered']+=net_zero
-        if reported is None:
-            counts['sem_valor_reportado']+=1
-        else:
-            counts['com_valor_reportado']+=1
-            totals['reported_known']+=reported
-            totals['gross_on_reported']+=gross
-            totals['net_zero_on_reported']+=net_zero
-            totals['gross_signed_residual']+=rg
-            totals['gross_abs_residual']+=abs(rg)
-            totals['net_zero_signed_residual']+=reported-net_zero
-            counts['gross_equal_within_cent']+=int(abs(rg)<=CENT)
-            counts['reported_less_gross']+=int(rg < -CENT)
-            counts['reported_greater_gross']+=int(rg > CENT)
-            if knows:
-                counts['complete_net_orders']+=1
-                totals['reported_complete_net']+=reported
-                totals['net_known_on_complete']+=net_known
-                totals['net_signed_residual_complete']+=rn
-                counts['net_equal_within_cent']+=int(abs(rn)<=CENT)
-            else:
-                counts['discount_unknown_and_reported']+=1
-            if o['status']=='entregue': totals['reported_delivered_known']+=reported
-        result.append({'pedido_id':o['id'],'status':o['status'],
-              'valor_total_reportado':str(cent(reported)) if reported is not None else '',
-              'valor_bruto_itens':str(cent(gross)),
-              'valor_liquido_desconto_conhecido':str(cent(net_known)) if net_known is not None else '',
-              'valor_liquido_assumindo_nulo_zero':str(cent(net_zero)),
-              'descontos_totalmente_conhecidos':knows,
-              'diferenca_reportado_menos_bruto':str(cent(rg)) if rg is not None else '',
-              'diferenca_reportado_menos_liquido_conhecido':str(cent(rn)) if rn is not None else ''})
-    r_nonull=[r for r in result if r['diferenca_reportado_menos_bruto']]
-    rank=sorted(r_nonull,key=lambda r:abs(money(r['diferenca_reportado_menos_bruto'])),reverse=True)
-    summary={'contagens':dict(counts),'totais_brl':{k:str(cent(v)) for k,v in totals.items()},
-        'pct_nao_conciliado_bruto':percent(counts['com_valor_reportado']-counts['gross_equal_within_cent'],counts['com_valor_reportado']),
-        'maiores_divergencias_brutas':rank[:5],
-        'politica':'Valores brutos: soma de quantidade × preço praticado; alternativa líquida aplica desconto_aplicado como fração adicional apenas nos pedidos completos. Tolerância: diferença absoluta <= R$0,01, após agregar valores sem arredondar linhas. Não inclui frete, tributos, reembolso, taxas ou comprovantes de pagamento.'}
-    return summary,result
+def reconcile(data: dict) -> tuple[dict, list[dict]]:
+    """Compatibilidade: implementação revisada da Tarefa 9 sem duplo desconto."""
+    from .q6 import build_q6
+    return build_q6(data)
 
 
 def supplier_metrics(data: dict) -> dict:

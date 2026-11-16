@@ -65,3 +65,11 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - `python -m pytest -q`: **53 passed**.
 - Teste independente `tests/test_q3_categorias.py`: joins com três tabelas, somas por categoria em centavos inteiros via SQLite, cenários de filtro de status, unidades e integridade.
 - A base e o PPT originais não foram alterados.
+
+
+## Validação das Tarefas 7–9
+
+- Testes sintéticos de grão pedido, denominação de taxas, cardinalidade e tratamento de valores ausentes.
+- Auditoria independente dos totais por canal e mês, e da soma de itens em centavos.
+- 15.000 pedidos, 14.921 valores reportados, 79 ausentes e nenhuma conciliação dentro de R$0,01 na base original.
+- Desconto não reaplicado ao preço praticado.

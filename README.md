@@ -107,3 +107,12 @@ Este projeto também é distribuído como checkout Git integral e bundle, inclui
 - Executar `python -m src.run` gera também `docs/06_Q3_CATEGORIAS.md`, comparações CSV e dois gráficos Q3.
 - Conferência independente de agregados por SQLite com preços convertidos a centavos inteiros, sem aplicar desconto duas vezes.
 - Suíte completa após implementação: **53 testes aprovados** (novembro de 2026).
+
+
+## Tarefas 7–9 (16/11/2026)
+
+- src/q4.py: aquisição e cancelamentos com estratos e ticket comparativo (não receita).
+- src/q5.py: 24 meses e incidência de pedidos distintos com ticket.
+- src/q6.py: conciliação por pedido sem desconto duplicado, com totais ausentes preservados.
+- python -m src.run gera relatórios Q4–Q6 e CSVs; python -m pytest -q verifica a regressão.
+- Todos os dados fictícios originais permanecem no repositório sem exclusões.

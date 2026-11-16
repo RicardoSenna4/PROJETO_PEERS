@@ -52,6 +52,7 @@ def test_category_uses_items_practiced_price_and_delivered_only():
 
 def test_acquisition_not_sales_channel_and_no_join_multiplication():
     data={'Clientes':[{'id':10,'canal_aquisicao':'A','segmento':'B2C'}],
+          'Itens_Pedido':[{'id':1,'pedido_id':1,'quantidade':1,'preco_praticado':10,'desconto_aplicado':0}],
           'Pedidos':[{'id':1,'cliente_id':10,'data_pedido':'2023-01-02','status':'entregue','valor_total':10,'canal_venda':'marketplace'},
                      {'id':2,'cliente_id':10,'data_pedido':'2023-01-02','status':'cancelado','valor_total':None,'canal_venda':'site'}]}
     result=acquisition_metrics(data)['canais'][0]
@@ -65,16 +66,17 @@ def test_acquisition_not_sales_channel_and_no_join_multiplication():
 def test_reconciliation_never_imputes_missing_as_true():
     data={'Pedidos':[{'id':1,'status':'entregue','valor_total':20},
                      {'id':2,'status':'entregue','valor_total':None}],
-          'Itens_Pedido':[{'pedido_id':1,'quantidade':2,'preco_praticado':10,'desconto_aplicado':0.10},
-                          {'pedido_id':2,'quantidade':1,'preco_praticado':20,'desconto_aplicado':None}]}
+          'Itens_Pedido':[{'id':1,'pedido_id':1,'quantidade':2,'preco_praticado':10,'desconto_aplicado':0.10},
+                          {'id':2,'pedido_id':2,'quantidade':1,'preco_praticado':20,'desconto_aplicado':None}]}
     summary, rows = reconcile(data)
     assert summary['contagens']['gross_equal_within_cent']==1
-    assert summary['contagens']['net_equal_within_cent']==0
+    assert summary['contagens']['conciliados_ate_um_centavo']==1
     assert summary['contagens']['sem_valor_reportado']==1
     assert summary['contagens']['desconto_desconhecido_pedidos']==1
     assert rows[1]['valor_total_reportado']==''
-    assert rows[1]['valor_liquido_desconto_conhecido']==''
-    assert rows[0]['valor_liquido_desconto_conhecido']=='18.00'
+    assert rows[1]['diferenca_reportado_menos_itens']==''
+    assert rows[0]['valor_comercial_itens']=='20.00'
+    assert 'valor_liquido_desconto_conhecido' not in rows[0]
 
 
 def test_months_are_consecutive_even_if_empty():
@@ -132,7 +134,7 @@ def test_reconciliation_real_14921_zero_match(db):
     assert counts['sem_valor_reportado']==79
     assert counts['desconto_desconhecido_pedidos']==301
     assert counts['gross_equal_within_cent']==0
-    assert counts['net_equal_within_cent']==0
+    assert counts['conciliados_ate_um_centavo']==0
     assert Decimal(summary['totais_brl']['gross_all'])==Decimal('176730490.88')
 
 

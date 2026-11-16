@@ -7,6 +7,9 @@ from .analysis import analyze
 from .validation import validate_input
 from .q2 import q2_years_rows, render_q2_report
 from .q3 import build_q3, render_q3_report, plot_q3
+from .q4 import render_q4_report, plot_q4
+from .q5 import render_q5_report, plot_q5
+from .q6 import render_q6_report
 
 
 def write_csv(path:Path, rows:list[dict]):
@@ -58,6 +61,9 @@ def main():
     p.add_argument('--output',default='outputs')
     p.add_argument('--q2-report',default='docs/05_Q2_DISTRIBUICAO_STATUS.md')
     p.add_argument('--q3-report',default='docs/06_Q3_CATEGORIAS.md')
+    p.add_argument('--q4-report',default='docs/07_Q4_AQUISICAO.md')
+    p.add_argument('--q5-report',default='docs/08_Q5_SERIE_MENSAL.md')
+    p.add_argument('--q6-report',default='docs/09_Q6_RECONCILIACAO.md')
     args=p.parse_args();out=Path(args.output);out.mkdir(parents=True,exist_ok=True)
     data=load_xlsx(args.input);data.pop('Leia-me',None)
     validate_input(data)
@@ -70,17 +76,27 @@ def main():
       'q2_por_ano.csv':q2_years_rows(metrics['Q2']),'q3_categorias_entregues.csv':metrics['Q3_entregues'],
       'q3_categorias_nao_cancelados.csv':metrics['Q3_nao_cancelados'],'q3_categorias_todos.csv':metrics['Q3_todos'],
       'q4_canais.csv':metrics['Q4']['canais'],'q4_estratos.csv':metrics['Q4']['estratos'],
+      'q4_segmentos.csv':metrics['Q4']['estratos_segmento'], 'q4_anos.csv':metrics['Q4']['estratos_ano'],
+      'q4_segmento_ano.csv':metrics['Q4']['estratos_segmento_ano'],
+      'q6_status.csv':metrics['Q6']['por_status'],'q6_cupom.csv':metrics['Q6']['por_cupom'],
       'q5_mensal.csv':metrics['Q5']['meses'],'q5_coortes_suporte.csv':metrics['Q5']['coortes_suporte'],
       'q6_reconciliacao_pedido.csv':reconciliation,'q7_fornecedores.csv':metrics['Q7']['fornecedores']
     }.items():write_csv(out/path,rows)
     charts(metrics,out)
     plot_q3(q3,out)
+    plot_q4(metrics['Q4'],out)
+    plot_q5(metrics['Q5'],out)
     q3_report = Path(args.q3_report)
     q3_report.parent.mkdir(parents=True, exist_ok=True)
     q3_report.write_text(render_q3_report(q3), encoding='utf-8')
     q2_report = Path(args.q2_report)
     q2_report.parent.mkdir(parents=True, exist_ok=True)
     q2_report.write_text(render_q2_report(metrics['Q2']), encoding='utf-8')
+    for name,content in ((args.q4_report,render_q4_report(metrics['Q4'])),
+                         (args.q5_report,render_q5_report(metrics['Q5'])),
+                         (args.q6_report,render_q6_report(metrics['Q6']))):
+        path=Path(name);path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_text(content,encoding='utf-8')
     print('Análise concluída: '+str(out.resolve()))
     print('Pedidos=',metrics['Q2']['n'],'cancelados=',next(r for r in metrics['Q2']['tabela_status'] if r['status']=='cancelado'))
     print('Reconciliação=',metrics['Q6']['contagens'])
