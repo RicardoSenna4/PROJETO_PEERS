@@ -88,3 +88,14 @@ A validade das recomendações é **condicionada ao sentido das métricas**: tes
 - A execução remota de 16/11/2026 aprovou 74 testes e reproduziu as métricas, mas identificou `KeyError` no gerador de memo devido a campos legados de Q7.
 - Ajustado `scripts/build_deliverables.py` para ler `incidencia_chamado_mono_pct` e `pedidos_monofornecedor` e mantida a agregação explícita por causa no trimestre final de 2023 em `src/q7.py`.
 - Reexecutados localmente `python -m src.run`, `python scripts/build_deliverables.py` e `python -m pytest -q`: 74 testes e auditoria 15/15 aprovados; memo PDF A4 de 1 página, 346 palavras.
+
+## Fechamento das tarefas 13–15 — 16/11/2026
+
+- **83/83 testes passaram** em `python -m pytest -q` na árvore atual, incluindo integridade da fonte, memo PDF, Q1 literal, empacotamento e caso sintético de ordenação de causas.
+- **83/83 passaram em uma cópia independente**, criada sem saídas anteriores e regenerada por `python -m src.run` e `python scripts/build_deliverables.py` (diretório temporário de diagnóstico).
+- `python -m scripts.verify_reproducibility` criou dois workspaces descartáveis e confirmou **29 artefatos textuais idênticos** por SHA-256; conferiu Q1, 1 página A4 e 356 palavras no memo.
+- `python -m scripts.package_release` criou ZIP com **99 arquivos de projeto** e `MANIFEST_SHA256.txt` (100 entradas internas), validado por teste de integridade do ZIP e comparação de SHA-256 de cada arquivo.
+- Hashes dos dados originais não mudaram: Excel `f400a18e7cc838a201981c8a3ae2234e1a32a385ba1a3b91348f4f7770ca6f4b`; PowerPoint `ed902d4c507dd767c52143c4a528720f24da0b779833fcf78c1a1ca78af8f1f5`.
+- A auditoria independente interna da CLI continua com **15/15 checagens**.
+- O envio ao recrutamento **não foi realizado**; o prazo oficial às 10h de 16/11/2026 já havia terminado.
+- O estado de publicação em GitHub deve ser conferido pelas referências remotas após os commits; a validação local não implica push remoto.

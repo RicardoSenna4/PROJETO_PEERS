@@ -136,3 +136,18 @@ python -m pytest -q
 O comando gera `outputs/q7_fornecedores.csv`, `outputs/q7_causas_mensais.csv`, `outputs/q8_q9_decisao.json` e `outputs/q12_auditoria.json`, além das saídas anteriores. A CLI encerra com falha se alguma checagem independente não corresponder ao resultado reportado.
 
 **Importante:** o recorte utilizado é o histórico de pedidos 2023–2024; a planilha original e a Q1 congelada permanecem inalteradas. As saídas financeiras são *proxies comerciais*, não receita auditada. A publicação no GitHub é feita separadamente do programa de análise.
+
+## Tarefas 13–15 — Reprodução, memo e entrega (16/11/2026)
+
+1. **Tarefa 13:** `scripts/verify_reproducibility.py` cria dois diretórios independentes, regenera todas as saídas e compara hashes de tabelas, métricas e relatórios. Corrigida ordem não determinística das categorias de suporte em `src/q7.py`; a lógica numérica foi preservada.
+2. **Tarefa 14:** `MEMO_FINAL.md`/`MEMO_ORBITSHOP.pdf` são produzidos pelo gerador com Q1 literal, respostas Q2–Q9, uma recomendação, trade-off e seção Uso de IA. O PDF é A4, uma página; a contagem máxima é 400 palavras. Consulte `docs/14_MEMO_EXECUTIVO.md`.
+3. **Tarefa 15:** `scripts/package_release.py` reúne **todos os dados originais**, códigos, testes, saídas e documentos num ZIP validado com `MANIFEST_SHA256.txt`. `docs/15_CHECKLIST_ENTREGA.md` registra o atendimento aos requisitos.
+
+Para validar a reprodução limpa após instalar as dependências:
+
+```bash
+python -m scripts.verify_reproducibility
+python -m scripts.package_release --output ../OrbitShop_Case_Peers_Entrega_Final.zip
+```
+
+**Atenção:** o prazo oficial informado no enunciado era 16/11/2026, às 10h. Caso a entrega ainda não tenha sido efetuada, confirme a possibilidade de submissão com o recrutamento; este projeto não realiza o envio automaticamente.

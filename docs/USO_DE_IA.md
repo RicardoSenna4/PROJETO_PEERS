@@ -41,3 +41,9 @@ Foi feito um teste explícito da relação entre preço de catálogo, desconto e
 ## Incremento das tarefas 10–12 (2026-11-16)
 
 A ferramenta auxiliou na implementação de Q7, Q8–Q9 e dos testes adversariais. Uma simplificação identificada foi a possibilidade de calcular chamados por pedido usando **quantidade de tickets** como numerador: isso só era equivalente nesta base porque não há chamados repetidos para o mesmo pedido. A correção separa `pedidos_mono_com_chamado` e `tickets_em_pedidos_mono`, com caso sintético de dois tickets para um pedido. Outra verificação relevante distinguiu recomendações condicionais e associação estatística de efeito causal. Os cálculos foram confrontados com 15 consultas independentes em SQLite. Nenhuma conferência externa humana foi presumida.
+
+## Fechamento das tarefas 13–15 (16/11/2026)
+
+O ChatGPT executou uma reprodução de ponta a ponta em dois workspaces descartáveis; uma diferença de ordenação na serialização das causas de chamados da Q7 foi detectada e corrigida com ordenação lexical, sem mudança nos valores das métricas. Foram acrescentados testes de invariância, um verificador de memo A4 com limite de 400 palavras, e empacotamento com manifesto SHA-256.
+
+O memo final esclarece a diferença financeira entre totais reportados e valores reconstruídos dos itens, preserva Q1 e inclui declaração factual de uso de IA. A recomendação é uma medida preventiva condicionada à investigação, não a promessa de resultado causal ou econômico.
