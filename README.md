@@ -1,153 +1,248 @@
-# OrbitShop — análise reprodutível para a Peers Consulting
+# OrbitShop — Análise de Dados
 
-Implementação das questões **Q1–Q9** do `Case_OrbitShop_Individual_v2.pptx` a partir da base original `Base_Dados_OrbitShop_v3.xlsx`. O propósito é produzir uma conclusão empresarial **verificável e limitada pelo que os dados realmente demonstram**. Não é um sistema operacional, API ou dashboard.
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Pytest](https://img.shields.io/badge/Pytest-83%20testes%20aprovados-0A9EDC?logo=pytest&logoColor=white)](tests/)
+[![GitHub Actions](https://github.com/RicardoSenna4/PROJETO_PEERS/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RicardoSenna4/PROJETO_PEERS/actions/workflows/ci.yml)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-visualiza%C3%A7%C3%A3o-11557C)](https://matplotlib.org/)
+[![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-2E8B57)](docs/15_CHECKLIST_ENTREGA.md)
 
-## Entrega principal
+Projeto de análise de dados desenvolvido para o **case individual de Digital Consulting da Peers Consulting**, com base na operação fictícia de e-commerce **OrbitShop**.
 
-| Arquivo | Finalidade |
-| --- | --- |
-| `MEMO_ORBITSHOP.pdf` | **Memo executivo**, 1 página A4, 346 palavras, Q1 no topo, seção Uso de IA |
-| `MEMO_FINAL.md` | Fonte editável do texto do memo |
-| `docs/RELATORIO_TECNICO.md` | Respostas detalhadas Q1–Q9, tabelas, premissas e limitações |
-| `docs/02_AUDITORIA_DADOS.md` | Tarefa 2: auditoria da base, nulos, integridade, datas, descontos e valores |
-| `docs/03_METRICAS_E_ASSUNCOES.md` | Tarefa 3: contrato de métricas por questão, denominadores e ressalvas |
-| `docs/04_IMPLEMENTACAO_E_TESTES.md` | Tarefa 4: arquitetura mínima, pré-validação bloqueante e TDD |
-| `docs/05_Q2_DISTRIBUICAO_STATUS.md` | Tarefa 5: contagem geral, comparação anual e interpretação da Q2 |
-| `docs/06_Q3_CATEGORIAS.md` | Tarefa 6: ranking de valor comercial e unidades, sensibilidade por status e evidências |
-| `outputs/q2_por_ano.csv` | Detalhamento auditável por coorte de compra, 2023 e 2024 |
-| `outputs/q3_comparacao_entregues.csv` | Ranking comparativo em pedidos entregues, com participações e preço médio ponderado |
-| `outputs/q3_ranking_volume.csv` | Ranking de categorias em unidades |
-| `outputs/q3_ranking_valor.png` e `outputs/q3_ranking_volume.png` | Figuras de Q3 com escalas separadas |
-| `outputs/auditoria_qualidade.json` e `outputs/dicionario_dados.csv` | Evidências da auditoria e catálogo de campos |
-| `outputs/` | Tabelas CSV, figuras PNG, métricas JSON e reconciliação individual de 15.000 pedidos |
-| `src/` | Código de leitura, validação, métricas, gráficos e exportação |
-| `tests/` | Testes sintéticos e independentes via SQLite |
-| `input/` | Base Excel e case PowerPoint originais, sem modificações |
-| `Q1_CONGELADA_PRE_ANALISE.md` | Q1 preservada antes de acessar os dados do Excel |
-| `docs/VALIDACAO.md` | Resultado real da execução dos testes e da conferência final |
+A solução responde às questões **Q1–Q9**, investiga divergências entre indicadores executivos, reconcilia dados comerciais, analisa cancelamentos e chamados de suporte e apresenta **uma recomendação priorizada ao conselho**. Toda conclusão é acompanhada de código reproduzível, testes, gráficos e ressalvas metodológicas.
 
-## Ambiente
+> Este repositório é um projeto de **análise de dados**, não uma API ou aplicação web. Os valores financeiros reconstruídos são indicadores comerciais e **não representam receita contábil auditada**.
 
-- Python **3.11+**.
-- Dependências externas para gráficos/PDF/testes: `matplotlib`, `reportlab`, `pytest`.
-- **Leitura dos dados usa somente a biblioteca padrão** (`zipfile` e XML), sem depender de Excel, pandas, openpyxl ou de serviços online. É um leitor enxuto de OOXML adequado ao esquema recebido; não foi projetado como leitor XLSX universal.
-- Não são necessárias credenciais, variáveis de ambiente ou serviços externos.
+## Funcionalidades
 
-### Instalação e execução
+- Leitura das seis tabelas originais do Excel sem alterar os arquivos de entrada.
+- Auditoria de qualidade: chaves, duplicações, integridade referencial, datas e valores ausentes.
+- Distribuição de pedidos por status e comparação das taxas de cancelamento entre 2023 e 2024.
+- Ranking de categorias por **valor dos itens** e **unidades vendidas**.
+- Análise de cancelamentos e ticket médio por **canal de aquisição**, ano e segmento B2B/B2C.
+- Série mensal de pedidos e chamados de suporte, com análise de coortes.
+- Reconciliação entre o total informado do pedido e a soma de seus itens.
+- Comparação de fornecedores por avaliações e incidência de chamados, sem atribuição indevida de tickets multifornecedor.
+- Recomendação executiva única, com trade-off e identificação dos dados faltantes.
+- Exportação de CSVs, gráficos PNG, métricas JSON, relatório técnico e memo executivo PDF.
+- Testes automatizados, auditoria via SQLite e reprodução determinística de resultados.
+- Empacotamento em ZIP com manifesto de integridade SHA-256.
 
-A partir da pasta que contém este README:
+## Tecnologias
 
-```bash
+| Tecnologia | Versão/requisito | Uso |
+|---|---|---|
+| Python | 3.11+ | Linguagem principal |
+| Biblioteca padrão (zipfile e XML) | Incluída no Python | Leitura do XLSX original |
+| SQLite (sqlite3) | Incluído no Python | Conferência independente das métricas |
+| Matplotlib | 3.7+ e inferior a 4.0 | Gráficos |
+| ReportLab | 4.x | Geração do PDF |
+| pypdf | 5.x ou 6.x | Verificação do PDF |
+| pytest | 8.x ou 9.x | Testes automatizados |
+| GitHub Actions | Workflow do repositório | Integração contínua |
+
+O leitor Excel é específico para o esquema OOXML utilizado neste case. **Não são necessários banco de dados externo, credenciais ou serviços de nuvem.**
+
+## Demonstração
+
+### Status dos pedidos — Q2
+
+Distribuição dos pedidos entre entregues, cancelados, em trânsito e devolvidos, com comparação das taxas por ano da compra.
+
+![Distribuição dos pedidos por status](outputs/q2_status.png)
+
+### Categorias mais vendidas — Q3
+
+Comparação dos rankings por valor comercial dos itens e quantidade de unidades vendidas.
+
+![Ranking por valor comercial](outputs/q3_ranking_valor.png)
+
+![Ranking por volume de unidades](outputs/q3_ranking_volume.png)
+
+### Aquisição e cancelamentos — Q4
+
+A análise distingue o canal de **aquisição do cliente** do canal de **venda do pedido**.
+
+![Cancelamentos por canal de aquisição](outputs/q4_aquisicao.png)
+
+### Evolução mensal — Q5
+
+Série de 2023–2024: picos de pedidos e comparação com chamados, sem presumir causalidade.
+
+![Evolução mensal dos pedidos](outputs/q5_mensal.png)
+
+### Fornecedores e suporte — Q7
+
+Comparação de avaliações e chamados em pedidos de fornecedor único, evitando atribuições indevidas.
+
+![Análise dos fornecedores](outputs/q7_fornecedores.png)
+
+## Principais resultados
+
+| Indicador | Resultado |
+|---|---:|
+| Pedidos analisados | 15.000 |
+| Clientes cadastrados | 3.000 |
+| Produtos no catálogo | 200 |
+| Itens de pedido | 36.740 |
+| Chamados de suporte | 4.000 |
+| Avaliações | 8.000 |
+| Pedidos cancelados | 2.537 (16,91%) |
+| Cancelamentos de clientes adquiridos via paid_search | 1.219 em 3.965 pedidos (30,74%) |
+| Pico mensal de pedidos | Novembro/2023: 2.317 |
+| Pedidos com valor total informado | 14.921 |
+| Pedidos conciliados à soma dos itens (±R$ 0,01) | 0 |
+
+A taxa de cancelamento foi **16,78% em 2023** e **17,09% em 2024** (por ano de criação do pedido), apesar de a quantidade absoluta de cancelamentos ter diminuído. **DeltaFornece ME** teve as piores avaliações, mas os dados não demonstram que explique sozinho o aumento de suporte.
+
+**Recomendação:** congelar **a expansão**, e não necessariamente as operações atuais, do investimento em mídia paga (paid_search) até esclarecer os motivos dos cancelamentos. A decisão tem custo de oportunidade e não permite estimar recuperação de margem em reais.
+
+Consulte o [relatório técnico completo](docs/RELATORIO_TECNICO.md) para as fórmulas, tabelas e ressalvas.
+
+## Organização do código
+
+~~~text
+PROJETO_PEERS/
+├── input/                   Base Excel e enunciado PowerPoint originais
+├── src/
+│   ├── workbook.py          Leitura do XLSX
+│   ├── data_quality.py      Auditoria da base
+│   ├── validation.py        Validação dos dados
+│   ├── analysis.py          Métricas compartilhadas
+│   ├── q2.py ... q7.py      Análises por questão
+│   ├── q8_q9.py             Recomendação e lacunas
+│   ├── audit_review.py      Auditoria independente
+│   └── run.py               Execução principal
+├── scripts/
+│   ├── build_deliverables.py       Memo PDF e relatório
+│   ├── run_data_audit.py           Auditoria exploratória
+│   ├── verify_reproducibility.py   Reprodução independente
+│   └── package_release.py         ZIP com manifesto SHA-256
+├── tests/                   Testes de regressão e integração
+├── outputs/                 Gráficos, tabelas e indicadores
+├── docs/                    Documentação metodológica e auditorias
+├── MEMO_FINAL.md            Texto editável do memo
+├── MEMO_ORBITSHOP.pdf       Memo executivo de uma página
+├── Q1_CONGELADA_PRE_ANALISE.md
+└── requirements.txt
+~~~
+
+## Como executar
+
+### Pré-requisitos
+
+- Python 3.11 ou superior.
+- Git para clonar o repositório.
+- Terminal (PowerShell, bash ou equivalente).
+
+### 1. Clonar o projeto
+
+~~~bash
+git clone https://github.com/RicardoSenna4/PROJETO_PEERS.git
+cd PROJETO_PEERS
+~~~
+
+### 2. Criar e ativar o ambiente virtual
+
+**Windows (PowerShell):**
+
+~~~powershell
 python -m venv .venv
-# Linux/macOS:
+.\.venv\Scripts\Activate.ps1
+~~~
+
+**Linux/macOS:**
+
+~~~bash
+python3 -m venv .venv
 source .venv/bin/activate
-# Windows PowerShell:
-# .venv\Scripts\Activate.ps1
+~~~
+
+### 3. Instalar as dependências
+
+~~~bash
 python -m pip install -r requirements.txt
+~~~
+
+### 4. Executar a análise
+
+~~~bash
 python -m src.run --input input/Base_Dados_OrbitShop_v3.xlsx --output outputs
-python -m scripts.run_data_audit
-python -m pytest -q
+~~~
+
+O comando lê a base, valida os registros e regenera métricas, CSVs, gráficos e relatórios.
+
+### 5. Gerar o memo executivo
+
+~~~bash
 python scripts/build_deliverables.py
-```
+~~~
 
-No Windows, pode ser necessário usar `py` em vez de `python`. O gerador `scripts/build_deliverables.py` deve ser executado **após** o cálculo das métricas, pois lê `outputs/metricas.json`.
+O gerador utiliza os resultados de **outputs/metricas.json** e deve ser executado após a análise. Produz **MEMO_FINAL.md** e **MEMO_ORBITSHOP.pdf**.
 
-Os comandos de análise e testes foram executados com sucesso no ambiente de desenvolvimento. O PDF possui uma página, e a contagem de palavras do texto-fonte foi validada. Consulte `docs/VALIDACAO.md`.
+### 6. Executar testes e validar reprodução
 
-## Definições resumidas
-
-- **Cancelamento:** pedido com `status == 'cancelado'` / pedidos distintos (por coorte do **ano da compra**, não data do cancelamento, que não existe na base).
-- **Q3:** unidades `SUM(quantidade)` e valor bruto de itens `SUM(quantidade × preco_praticado)` **em pedidos entregues**. Não significa receita reconhecida.
-- **Q4:** agrupar por `Clientes.canal_aquisicao` (não confundir com `Pedidos.canal_venda`). Ticket médio = soma de `Pedidos.valor_total` não nulo / número de pedidos entregues com total não nulo; **não é receita auditada**.
-- **Q5:** meses consecutivos 2023-01…2024-12. Suporte por mês de abertura e, separadamente, por mês de criação do pedido associado.
-- **Q6:** comparação entre total informado e soma de `quantidade × preco_praticado` por pedido. A auditoria da Tarefa 2 confirmou que `preco_praticado` **já incorpora** `desconto_aplicado` (36.439 de 36.439 itens conhecidos, até R$ 0,01). **Não reaplicar desconto**. Os campos históricos `valor_liquido_desconto_conhecido` e `valor_liquido_assumindo_nulo_zero` nos CSVs anteriores são apenas simulações incorretas para receita e devem ser **desconsiderados**; o comparativo bruto de itens praticados continua válido como proxy.
-- **Q7:** avaliações atribuídas a fornecedor via produto efetivamente avaliado. Chamados atribuídos para fins comparativos **apenas a pedidos com um único fornecedor**. Em pedidos com vários fornecedores, os chamados não podem ser atribuídos causalmente a algum deles.
-- **Q8/Q9:** uma decisão imediata com trade-off; a recomendação é provisória na falta de motivos/histórico dos cancelamentos e sem prova de faturamento.
-
-## Achados-chave e leitura responsável
-
-- 2.537 de 15.000 pedidos cancelados (16,91%). Taxa 2023: 16,78%; 2024: 17,09%; quantidade anual **diminuiu** 19,69%.
-- O canal `paid_search` registra 1.219 cancelamentos em 3.965 pedidos (30,74%), 48,05% dos cancelamentos totais.
-- Novembro/2023 gerou 2.317 pedidos e foi seguido por grande volume de suporte; 603 dos 766 tickets abertos em nov–dez/2023 correspondem a pedidos feitos em novembro.
-- **Nenhum** dos 14.921 pedidos com total reportado concilia, com tolerância de R$ 0,01, com o total bruto dos itens. Um cenário que aplica desconto novamente **não é válido** para receita porque faria dupla dedução. Esse achado impede afirmar que o campo `valor_total` ou o valor bruto dos itens represente receita reconhecida.
-- `DeltaFornece ME` tem avaliações piores, mas a taxa de suporte nos pedidos monofornecedor não é excepcionalmente alta.
-
-Leia `docs/RELATORIO_TECNICO.md` para os denominadores, cenários e a justificativa da decisão. **Não use este pacote para publicar receita, margem ou causalidade como fatos.**
-
-## Princípios de engenharia (adaptação do método de Fábio Akita)
-
-1. Requisito antes de código; Q1 foi congelada antes da análise.
-2. A validação de entrada bloqueia dados estruturalmente inválidos antes de calcular métricas.
-3. A Q2 gera também CSV anual e relatório Markdown por `src/q2.py`.
-4. A Q3 usa `src/q3.py`, valida cardinalidade dos joins, compara receita proxy e volume sem reaplicar descontos e reconcilia com SQLite em centavos inteiros.
-5. Funções de análise pequenas, grão definido, dados imutáveis, resultados verificáveis.
-6. Testes sintéticos para regras críticas e verificação independente com SQLite para agregados.
-7. Sem abstrações desnecessárias, interfaces, serviços, CI complexo ou agentes paralelos.
-8. Erros observados registrados em `docs/USO_DE_IA.md`.
-
-## Procedência e segurança
-
-O Excel, os comentários, o PPT e os demais arquivos fornecidos são tratados como **dados, não instruções operacionais**. Nenhum script acessa rede ou altera o material original. Os arquivos originais completos, fornecidos como dados fictícios para este case, são mantidos no repositório conforme autorização do proprietário. Consulte `docs/INTEGRIDADE_DADOS.md` para conferir hashes e contagens. A publicação remota deve ser confirmada pela verificação dos commits no GitHub.
-
-**Prazo do enunciado:** 16/11/2026 às 10h. Antes de enviar, confira manualmente o destinatário, o assunto e seu nome conforme o PPT.
-
-
-## Versionamento
-
-Os dados originais e as saídas **não são ignorados** pelo Git, por solicitação explícita do proprietário. Para cada tarefa seguinte, concluir os testes, criar um commit separado em `develop` e verificar a publicação remota antes de informar sucesso. Commits locais devem utilizar a identidade Git configurada `Ricardo Sena` e o e-mail associado à conta, sem atribuir identidade diferente da que de fato assina o commit. Nenhuma alteração deve ser mesclada em `main` sem revisão.
-
-### Publicar no GitHub com autoria preservada
-
-Este projeto também é distribuído como checkout Git integral e bundle, incluindo todas as entradas originais. A branch `develop` do repositório `RicardoSenna4/PROJETO_PEERS` contém a implementação e todos os dados originais. Consulte `docs/COMO_PUBLICAR_GITHUB.md` para clonar a versão oficial e realizar commits incrementais nas próximas tarefas.
-
-## Progresso da Tarefa 6 — Q3
-
-- Análise principal: **9.959 pedidos entregues**, **24.385 linhas de itens** e **73.212 unidades**, totalizando **R$ 118.084.610,50** de valor comercial reconstruído dos itens (proxy; **não receita reconhecida**).
-- Top 3 por valor: Eletrônicos, Casa & Decoração, Beleza & Saúde. Por volume: Eletrônicos, Casa & Decoração, Moda.
-- Executar `python -m src.run` gera também `docs/06_Q3_CATEGORIAS.md`, comparações CSV e dois gráficos Q3.
-- Conferência independente de agregados por SQLite com preços convertidos a centavos inteiros, sem aplicar desconto duas vezes.
-- Suíte completa após implementação: **53 testes aprovados** (novembro de 2026).
-
-## Tarefas 7–9 — Implementação (16/11/2026)
-
-- `src/q4.py`: taxas por canal de **aquisição**, segmentos/anos e dois tickets descritivos não conciliados. Relatório em `docs/07_Q4_AQUISICAO.md`.
-- `src/q5.py`: calendário de 24 meses, picos por ano e incidência correta de pedidos com chamado por coorte. Relatório em `docs/08_Q5_SERIE_MENSAL.md`.
-- `src/q6.py`: reconciliação de 15 mil pedidos, sem aplicar desconto duas vezes ou preencher 79 totais nulos. Relatório em `docs/09_Q6_RECONCILIACAO.md`.
-- O comando `python -m src.run` produz automaticamente relatórios, CSVs e gráficos atualizados.
-- `python -m pytest -q` executa testes sintéticos e conferências independentes via SQLite (60 aprovados).
-- Os arquivos `input/*.xlsx` e `input/*.pptx` foram preservados integralmente.
-- O memo de uma página foi atualizado pelo gerador com as correções financeiras e de incidência; toda nova publicação exige revisão do conteúdo.
-
-## Tarefas 10–12 (Q7–Q9 e auditoria independente)
-
-- `src/q7.py`: Q7, avaliações por fornecedor e incidência de **pedidos monofornecedor com chamados**. Tickets de pedidos multiforncedor ficam sem atribuição individual.
-- `src/q8_q9.py`: uma única ação para Q8, explicitação do custo de oportunidade e uma pergunta material não respondida para Q9, com campos a solicitar.
-- `src/audit_review.py`: auditoria adversarial que **recalcula 15 invariantes em SQLite**, incluindo dinheiro em centavos inteiros e confrontos de granulação de dados.
-- `tests/test_q7_fornecedores.py`, `tests/test_q8_q9_decisao.py`, `tests/test_auditoria_adversarial.py`: cenários reais e artificiais que devem falhar quando métricas são adulteradas.
-- Relatórios: `docs/10_Q7_FORNECEDORES.md`, `docs/11_Q8_Q9_DECISAO.md` e `docs/12_AUDITORIA_ADVERSARIAL.md`.
-
-Execute na raiz do repositório, após preparar as dependências indicadas acima:
-
-```bash
-python -m src.run
+~~~bash
 python -m pytest -q
-```
-
-O comando gera `outputs/q7_fornecedores.csv`, `outputs/q7_causas_mensais.csv`, `outputs/q8_q9_decisao.json` e `outputs/q12_auditoria.json`, além das saídas anteriores. A CLI encerra com falha se alguma checagem independente não corresponder ao resultado reportado.
-
-**Importante:** o recorte utilizado é o histórico de pedidos 2023–2024; a planilha original e a Q1 congelada permanecem inalteradas. As saídas financeiras são *proxies comerciais*, não receita auditada. A publicação no GitHub é feita separadamente do programa de análise.
-
-## Tarefas 13–15 — Reprodução, memo e entrega (16/11/2026)
-
-1. **Tarefa 13:** `scripts/verify_reproducibility.py` cria dois diretórios independentes, regenera todas as saídas e compara hashes de tabelas, métricas e relatórios. Corrigida ordem não determinística das categorias de suporte em `src/q7.py`; a lógica numérica foi preservada.
-2. **Tarefa 14:** `MEMO_FINAL.md`/`MEMO_ORBITSHOP.pdf` são produzidos pelo gerador com Q1 literal, respostas Q2–Q9, uma recomendação, trade-off e seção Uso de IA. O PDF é A4, uma página; a contagem máxima é 400 palavras. Consulte `docs/14_MEMO_EXECUTIVO.md`.
-3. **Tarefa 15:** `scripts/package_release.py` reúne **todos os dados originais**, códigos, testes, saídas e documentos num ZIP validado com `MANIFEST_SHA256.txt`. `docs/15_CHECKLIST_ENTREGA.md` registra o atendimento aos requisitos.
-
-Para validar a reprodução limpa após instalar as dependências:
-
-```bash
 python -m scripts.verify_reproducibility
-python -m scripts.package_release --output ../OrbitShop_Case_Peers_Entrega_Final.zip
-```
+~~~
 
-**Atenção:** o prazo oficial informado no enunciado era 16/11/2026, às 10h. Caso a entrega ainda não tenha sido efetuada, confirme a possibilidade de submissão com o recrutamento; este projeto não realiza o envio automaticamente.
+Para rodar somente a auditoria da base:
+
+~~~bash
+python -m scripts.run_data_audit
+~~~
+
+## Arquivos gerados
+
+| Arquivo | Conteúdo |
+|---|---|
+| [outputs/q2_status.csv](outputs/q2_status.csv) | Distribuição por status |
+| [outputs/q3_comparacao_entregues.csv](outputs/q3_comparacao_entregues.csv) | Ranking de categorias por valor e unidades |
+| [outputs/q4_canais.csv](outputs/q4_canais.csv) | Aquisição, cancelamentos e ticket médio |
+| [outputs/q5_mensal.csv](outputs/q5_mensal.csv) | Pedidos e suporte em 24 meses |
+| [outputs/q6_reconciliacao_pedido.csv](outputs/q6_reconciliacao_pedido.csv) | Reconciliação dos 15.000 pedidos |
+| [outputs/q7_fornecedores.csv](outputs/q7_fornecedores.csv) | Avaliações e chamados por fornecedor |
+| [outputs/q8_q9_decisao.json](outputs/q8_q9_decisao.json) | Recomendação e lacunas de dados |
+| [outputs/q12_auditoria.json](outputs/q12_auditoria.json) | Auditoria independente de métricas |
+| [MEMO_ORBITSHOP.pdf](MEMO_ORBITSHOP.pdf) | Memo executivo final |
+
+## Metodologia
+
+- **Q1:** as perguntas foram registradas antes da leitura da base, conforme [documento congelado](Q1_CONGELADA_PRE_ANALISE.md).
+- **Q2:** cancelamento = pedidos distintos com status cancelado / total de pedidos; anos por data de compra, não de cancelamento.
+- **Q3:** valor comercial = quantidade × preço praticado em pedidos entregues. O preço já incorpora o desconto informado; não descontar duas vezes.
+- **Q4:** agrupamento por canal de aquisição do cliente. O ticket registrado não corresponde necessariamente à receita reconhecida.
+- **Q5:** série mensal contínua; a incidência de suporte por coorte conta pedidos distintos com chamado, não o número bruto de tickets dividido por pedidos.
+- **Q6:** os 79 valores totais ausentes são preservados. Nenhum dos 14.921 totais preenchidos conciliou com os itens a ±R$ 0,01.
+- **Q7:** chamados de pedidos com vários fornecedores não são atribuídos individualmente a um deles.
+- **Q8/Q9:** recomendação preventiva única, com custo de oportunidade e dados necessários para investigar causalidade.
+
+A metodologia completa consta em [Contrato de métricas](docs/03_METRICAS_E_ASSUNCOES.md), [Auditoria de dados](docs/02_AUDITORIA_DADOS.md) e [Auditoria adversarial](docs/12_AUDITORIA_ADVERSARIAL.md).
+
+## Testes
+
+~~~bash
+python -m pytest -q
+~~~
+
+A validação final documentada registrou **83 testes aprovados**, além de **15 verificações independentes em SQLite**. O verificador de reprodução confirmou **29 artefatos textuais idênticos** em duas execuções. O [GitHub Actions](.github/workflows/ci.yml) executa a suíte, reproduz as métricas e confere a integridade das fontes.
+
+## Entrega
+
+O [memo executivo em PDF](MEMO_ORBITSHOP.pdf) tem **uma página A4 e 356 palavras**. Ele inclui a Q1 no topo, conclusões das questões Q2–Q9, uma ação recomendada com trade-off e declaração do uso de IA.
+
+Para criar um ZIP completo, incluindo os arquivos originais, os scripts, os testes e as saídas:
+
+~~~bash
+python -m scripts.package_release --output ../OrbitShop_Case_Peers_Entrega_Final.zip
+~~~
+
+O pacote inclui um manifesto SHA-256. Consulte o [Checklist de entrega](docs/15_CHECKLIST_ENTREGA.md).
+
+> **Limitações:** não há trilha detalhada de cancelamentos, dados para conciliação contábil ou identificação do fornecedor responsável por chamados de pedidos multifornecedor. Correlações não são prova de causalidade, e a soma dos itens não deve ser apresentada como faturamento auditado.
+
+## Autor
+
+**Ricardo Sena**
+
+[GitHub](https://github.com/RicardoSenna4) · [Repositório](https://github.com/RicardoSenna4/PROJETO_PEERS)
