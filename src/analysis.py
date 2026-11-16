@@ -124,73 +124,41 @@ def categories_metrics(data: dict, eligible_status: set[str]|None=None) -> list[
 
 
 def acquisition_metrics(data: dict) -> dict:
-    """Compatibilidade: implementação revisada da Tarefa 7."""
+    """Compatibilidade: delega a implementação auditável da Tarefa 7."""
     from .q4 import build_q4
     return build_q4(data)
 
 
 def monthly_metrics(data: dict) -> dict:
-    """Compatibilidade: implementação revisada da Tarefa 8."""
+    """Compatibilidade: delega a implementação auditável da Tarefa 8."""
     from .q5 import build_q5
     return build_q5(data)
 
 
 def reconcile(data: dict) -> tuple[dict, list[dict]]:
-    """Compatibilidade: implementação revisada da Tarefa 9 sem duplo desconto."""
+    """Compatibilidade: delega a Tarefa 9, sem dupla dedução de descontos."""
     from .q6 import build_q6
     return build_q6(data)
 
 
 def supplier_metrics(data: dict) -> dict:
-    orders=indexed(data['Pedidos']); products=indexed(data['Produtos'])
-    values=defaultdict(list)
-    exposure=defaultdict(set)
-    delivered_units=Counter()
-    suppliers_by_order=defaultdict(set)
-    for i in data['Itens_Pedido']:
-        supplier=products[i['produto_id']]['fornecedor']
-        exposure[supplier].add(i['pedido_id'])
-        suppliers_by_order[i['pedido_id']].add(supplier)
-        if orders[i['pedido_id']]['status']=='entregue':delivered_units[supplier]+=i['quantidade']
-    for r in data['Avaliacoes']:
-        values[products[r['produto_id']]['fornecedor']].append(r['nota'])
-    tickets_by_order=Counter(t['pedido_id'] for t in data['Tickets_Suporte'])
-    supplier_orders=defaultdict(set)
-    for oid,ss in suppliers_by_order.items():
-        if len(ss)==1:supplier_orders[next(iter(ss))].add(oid)
-    out=[]
-    for s,notes in values.items():
-        unique=supplier_orders[s]
-        all_exposure=exposure[s]
-        note_negative=sum(n<=2 for n in notes)
-        all_tickets_present=sum(tickets_by_order[oid] for oid in all_exposure)
-        single_tickets=sum(tickets_by_order[oid] for oid in unique)
-        out.append({'fornecedor':s,'n_avaliacoes':len(notes),'nota_media':round(mean(notes),4),
-          'nota_mediana':median(notes),'avaliacoes_nota_ate_2':note_negative,
-          'avaliacoes_negativas_pct':percent(note_negative,len(notes)),
-          'pedidos_com_fornecedor':len(all_exposure),'unidades_em_pedidos_entregues':delivered_units[s],
-          'pedidos_com_apenas_este_fornecedor':len(unique),'tickets_nesses_pedidos':single_tickets,
-          'tickets_pct_pedidos_monofornecedor':percent(single_tickets,len(unique)),
-          'tickets_pedidos_contendo_fornecedor_nao_atribuidos':all_tickets_present})
-    out.sort(key=lambda r:r['nota_media'])
-    affected={oid for oid,ss in suppliers_by_order.items() if len(ss)>1}
-    ticket_multi=sum(t['pedido_id'] in affected for t in data['Tickets_Suporte'])
-    ticket_single=len(data['Tickets_Suporte'])-ticket_multi
-    q4=[t for t in data['Tickets_Suporte'] if '2023-10'<=t['data_abertura'][:7]<='2023-12']
-    return {'fornecedores':out,'pedidos_multifornecedor':len(affected),
-      'pedidos_monofornecedor':len(orders)-len(affected),'chamados_multifornecedor_sem_atribuicao':ticket_multi,
-      'chamados_monofornecedor':ticket_single,
-      'chamados_trimestre_final_2023_por_causa':dict(Counter(t['categoria_problema'] for t in q4))}
+    """Compatibilidade: implementar Q7 no módulo testável src.q7."""
+    from .q7 import build_q7
+    return build_q7(data)
 
 
 def analyze(data: dict) -> tuple[dict,list[dict]]:
     summary=audit(data)
     if any(summary['chaves_estrangeiras_orfas'].values()) or any(summary['anomalias_relacionais'].values()):
         raise ValueError(f'Falha relacional que precisa ser investigada: {summary}')
-    r6, detail =reconcile(data)
-    return {'auditoria':summary,'Q2':status_metrics(data['Pedidos']),
-        'Q3_entregues':categories_metrics(data, {'entregue'}),
-        'Q3_nao_cancelados':categories_metrics(data, {'entregue','em_transito','devolvido'}),
-        'Q3_todos':categories_metrics(data, {'entregue','em_transito','devolvido','cancelado'}),
-        'Q4':acquisition_metrics(data),'Q5':monthly_metrics(data),'Q6':r6,
-        'Q7':supplier_metrics(data)}, detail
+    r6, detail = reconcile(data)
+    metrics = {'auditoria': summary,
+        'Q2': status_metrics(data['Pedidos']),
+        'Q3_entregues': categories_metrics(data, {'entregue'}),
+        'Q3_nao_cancelados': categories_metrics(data, {'entregue','em_transito','devolvido'}),
+        'Q3_todos': categories_metrics(data, {'entregue','em_transito','devolvido','cancelado'}),
+        'Q4': acquisition_metrics(data), 'Q5': monthly_metrics(data), 'Q6': r6,
+        'Q7': supplier_metrics(data)}
+    from .q8_q9 import build_q8_q9
+    metrics['Q8_Q9'] = build_q8_q9(metrics)
+    return metrics, detail
